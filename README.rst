@@ -4,6 +4,13 @@ py-surveydata
 
 The ``surveydata`` Python package offers flexible access to survey data.
 
+------------
+Installation
+------------
+::
+
+    pip install surveydata
+
 --------
 Overview
 --------
