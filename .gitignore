@@ -112,3 +112,9 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Directories created by setuptools, during Python packaging
+/src/surveydata.egg-info/
+/src/surveydata/surveydata.egg-info/
+/dist/
+/build/

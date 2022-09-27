@@ -14,14 +14,18 @@
 
 from setuptools import setup
 
+with open('README.rst') as file:
+    readme = file.read()
+
 setup(
     name='surveydata',
-    version='0.1.0',
+    version='0.1.2',
     packages=['surveydata'],
     package_dir={'': 'src'},
     url='https://github.com/orangechairlabs/py-surveydata',
     license='Apache 2.0',
     author='Christopher Robert',
     author_email='crobert@orangechairlabs.com',
-    description='Flexible access to survey data'
+    description='Flexible access to survey data',
+    long_description=readme
 )
