@@ -2,8 +2,7 @@
 py-surveydata
 =============
 
-This is the codebase for the ``surveydata`` Python package, which offers flexible access
-to survey data.
+The ``surveydata`` Python package offers flexible access to survey data.
 
 --------
 Overview

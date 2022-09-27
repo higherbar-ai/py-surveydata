@@ -13,5 +13,9 @@
 #  limitations under the License.
 
 # report our current version, as installed
-# from importlib.metadata import version
-# __version__=version("surveydata")
+from importlib_metadata import version
+try:
+    __version__ = version("surveydata")
+except:
+    # (ignore exceptions when developing and testing locally)
+    pass
