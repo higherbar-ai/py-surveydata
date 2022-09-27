@@ -1,0 +1,8 @@
+<component name="CopyrightManager">
+  <copyright>
+    <option name="allowReplaceRegexp" value="20[2-9][0-9]" />
+    <option name="keyword" value="Copyright \(c\).*Orange Chair Labs LLC" />
+    <option name="notice" value="Copyright (c) &amp;#36;originalComment.match(&quot;Copyright \(c\) (\d+)&quot;, 1, &quot;-&quot;, &quot;&amp;#36;today.year&quot;)&amp;#36;today.year Orange Chair Labs LLC. All rights reserved." />
+    <option name="myName" value="OCL All Rights Reserved" />
+  </copyright>
+</component>
