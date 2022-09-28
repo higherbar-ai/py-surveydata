@@ -28,7 +28,8 @@ class SurveyCTOPlatform(SurveyPlatform):
     # define constants
     ID_FIELD = "KEY"                            # unique submission ID field
 
-    def __init__(self, server: str, username: str, password: str, formid: str, private_key: str = ""):
+    def __init__(self, server: str = "", username: str = "", password: str = "", formid: str = "",
+                 private_key: str = ""):
         """
         Initialize SurveyCTO for access to survey data.
 
@@ -42,12 +43,18 @@ class SurveyCTOPlatform(SurveyPlatform):
         :type formid: str
         :param private_key: Full text of private key, if using encryption
         :type private_key: str
+
+        If you're not going to call sync_data(), you don't need to supply any of the parameters to this constructor.
         """
 
         self.server = server
-        self.creds = requests.auth.HTTPBasicAuth(username, password)
         self.formid = formid
         self.private_key = private_key
+        if username and password:
+            self.creds = requests.auth.HTTPBasicAuth(username, password)
+        else:
+            # allow for initialization without sync_data() support
+            self.creds = None
 
         # call base class constructor as well
         super().__init__()
@@ -67,7 +74,12 @@ class SurveyCTOPlatform(SurveyPlatform):
         :rtype: int
         """
 
-        # Decide where attachments should go (if anywhere)
+        # fire an exception if we haven't been initialized for syncing
+        if not self.server or not self.formid or self.creds is None:
+            raise ValueError("SurveyCTOPlatform not initialized with parameters sufficient for syncing data (server, "
+                             "formid, username, password).")
+
+        # decide where attachments should go (if anywhere)
         if no_attachments:
             attachment_storage = None
         elif attachment_storage is None:

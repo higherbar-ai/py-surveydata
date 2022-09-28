@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>surveydata.storagesystem module &mdash; surveydata 0.1.2 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="surveydata.surveyctoexportstorage module" href="surveydata.surveyctoexportstorage.html" />
+    <link rel="prev" title="surveydata.s3storage module" href="surveydata.s3storage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> surveydata
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">surveydata</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="surveydata.html">surveydata package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="surveydata.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="surveydata.dynamodbstorage.html">surveydata.dynamodbstorage module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="surveydata.filestorage.html">surveydata.filestorage module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="surveydata.s3storage.html">surveydata.s3storage module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">surveydata.storagesystem module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="surveydata.surveyctoexportstorage.html">surveydata.surveyctoexportstorage module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="surveydata.surveyctoplatform.html">surveydata.surveyctoplatform module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="surveydata.surveyplatform.html">surveydata.surveyplatform module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.html#module-surveydata">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">surveydata</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">surveydata</a> &raquo;</li>
+          <li><a href="surveydata.html">surveydata package</a> &raquo;</li>
+      <li>surveydata.storagesystem module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/surveydata.storagesystem.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-surveydata.storagesystem">
+<span id="surveydata-storagesystem-module"></span><h1>surveydata.storagesystem module<a class="headerlink" href="#module-surveydata.storagesystem" title="Permalink to this heading"></a></h1>
+<p>Support for S3 as a survey data storage system.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="surveydata.storagesystem.StorageSystem">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surveydata.storagesystem.</span></span><span class="sig-name descname"><span class="pre">StorageSystem</span></span><a class="headerlink" href="#surveydata.storagesystem.StorageSystem" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Largely-abstract base class for survey data storage systems.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.storagesystem.StorageSystem.attachments_supported">
+<span class="sig-name descname"><span class="pre">attachments_supported</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#surveydata.storagesystem.StorageSystem.attachments_supported" title="Permalink to this definition"></a></dt>
+<dd><p>Query whether storage system supports attachments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if attachments supported, otherwise False</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.storagesystem.StorageSystem.get_attachment">
+<span class="sig-name descname"><span class="pre">get_attachment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attachment_location</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submission_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachment_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">BinaryIO</span></span></span><a class="headerlink" href="#surveydata.storagesystem.StorageSystem.get_attachment" title="Permalink to this definition"></a></dt>
+<dd><p>Get submission attachment from storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attachment_location</strong> (<em>str</em>) – Attachment location string (as returned when attachment stored)</p></li>
+<li><p><strong>submission_id</strong> (<em>str</em>) – Unique submission ID (in lieu of attachment_location)</p></li>
+<li><p><strong>attachment_name</strong> (<em>str</em>) – Attachment filename (in lieu of attachment_location)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Attachment as file-like object (though, note: it doesn’t support seeking)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BinaryIO</p>
+</dd>
+</dl>
+<p>Must pass either attachment_location or both submission_id and attachment_name.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.storagesystem.StorageSystem.get_cursor">
+<span class="sig-name descname"><span class="pre">get_cursor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#surveydata.storagesystem.StorageSystem.get_cursor" title="Permalink to this definition"></a></dt>
+<dd><p>Get cursor string from storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Cursor string from storage, or empty string if no cursor exists</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.storagesystem.StorageSystem.get_submission">
+<span class="sig-name descname"><span class="pre">get_submission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submission_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#surveydata.storagesystem.StorageSystem.get_submission" title="Permalink to this definition"></a></dt>
+<dd><p>Get submission data from storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>submission_id</strong> (<em>str</em>) – Unique submission ID</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Submission data (or empty dictionary if submission not found)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.storagesystem.StorageSystem.get_submissions">
+<span class="sig-name descname"><span class="pre">get_submissions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#surveydata.storagesystem.StorageSystem.get_submissions" title="Permalink to this definition"></a></dt>
+<dd><p>Get all submission data from storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of dictionaries, one for each submission</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.storagesystem.StorageSystem.get_submissions_df">
+<span class="sig-name descname"><span class="pre">get_submissions_df</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#surveydata.storagesystem.StorageSystem.get_submissions_df" title="Permalink to this definition"></a></dt>
+<dd><p>Get all submission data from storage, organized into a Pandas DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Pandas DataFrame containing all submissions currently in storage</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.storagesystem.StorageSystem.list_attachments">
+<span class="sig-name descname"><span class="pre">list_attachments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submission_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#surveydata.storagesystem.StorageSystem.list_attachments" title="Permalink to this definition"></a></dt>
+<dd><p>List all attachments currently in storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>submission_id</strong> (<em>str</em>) – Optional submission ID, to list only attachments for specific submission</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of attachments, each as dict with name, submission_id, and location_string</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.storagesystem.StorageSystem.list_submissions">
+<span class="sig-name descname"><span class="pre">list_submissions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#surveydata.storagesystem.StorageSystem.list_submissions" title="Permalink to this definition"></a></dt>
+<dd><p>List all submissions currently in storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of submission IDs</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.storagesystem.StorageSystem.query_attachment">
+<span class="sig-name descname"><span class="pre">query_attachment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attachment_location</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submission_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachment_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#surveydata.storagesystem.StorageSystem.query_attachment" title="Permalink to this definition"></a></dt>
+<dd><p>Query whether specific submission attachment exists in storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attachment_location</strong> (<em>str</em>) – Attachment location string (as returned when attachment stored)</p></li>
+<li><p><strong>submission_id</strong> (<em>str</em>) – Unique submission ID (in lieu of attachment_location)</p></li>
+<li><p><strong>attachment_name</strong> (<em>str</em>) – Attachment filename (in lieu of attachment_location)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if submission exists in storage; otherwise False</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.storagesystem.StorageSystem.query_submission">
+<span class="sig-name descname"><span class="pre">query_submission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submission_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#surveydata.storagesystem.StorageSystem.query_submission" title="Permalink to this definition"></a></dt>
+<dd><p>Query whether specific submission exists in storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>submission_id</strong> (<em>str</em>) – Unique submission ID</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if submission exists in storage; otherwise False</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.storagesystem.StorageSystem.store_attachment">
+<span class="sig-name descname"><span class="pre">store_attachment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submission_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachment_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachment_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BinaryIO</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#surveydata.storagesystem.StorageSystem.store_attachment" title="Permalink to this definition"></a></dt>
+<dd><p>Store submission attachment in storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>submission_id</strong> (<em>str</em>) – Unique submission ID</p></li>
+<li><p><strong>attachment_name</strong> (<em>str</em>) – Attachment filename</p></li>
+<li><p><strong>attachment_data</strong> (<em>BinaryIO</em>) – File-type object containing the attachment data</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Location string for stored attachment</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.storagesystem.StorageSystem.store_cursor">
+<span class="sig-name descname"><span class="pre">store_cursor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surveydata.storagesystem.StorageSystem.store_cursor" title="Permalink to this definition"></a></dt>
+<dd><p>Store cursor string in storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cursor</strong> (<em>str</em>) – Cursor string to store.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.storagesystem.StorageSystem.store_submission">
+<span class="sig-name descname"><span class="pre">store_submission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submission_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submission_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surveydata.storagesystem.StorageSystem.store_submission" title="Permalink to this definition"></a></dt>
+<dd><p>Store submission data in storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>submission_id</strong> (<em>str</em>) – Unique submission ID</p></li>
+<li><p><strong>submission_data</strong> (<em>dict</em>) – Submission data to store</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="surveydata.s3storage.html" class="btn btn-neutral float-left" title="surveydata.s3storage module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="surveydata.surveyctoexportstorage.html" class="btn btn-neutral float-right" title="surveydata.surveyctoexportstorage module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Orange Chair Labs LLC.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
