@@ -9,7 +9,7 @@ surveydata Python Package Documentation
 
 .. toctree::
    :maxdepth: 5
-   :caption: Contents:
+   :caption: Reference
 
    modules
 
