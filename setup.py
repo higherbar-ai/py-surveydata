@@ -23,6 +23,7 @@ setup(
     packages=['surveydata'],
     package_dir={'': 'src'},
     url='https://github.com/orangechairlabs/py-surveydata',
+    project_urls={'Documentation': 'https://surveydata.readthedocs.io/'},
     license='Apache 2.0',
     author='Christopher Robert',
     author_email='crobert@orangechairlabs.com',
