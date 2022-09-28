@@ -4,14 +4,13 @@ py-surveydata
 
 The ``surveydata`` Python package offers flexible access to survey data.
 
-------------
 Installation
 ------------
-::
+
+Installing the latest version with pip::
 
     pip install surveydata
 
---------
 Overview
 --------
 
@@ -40,9 +39,13 @@ In general, the workflow goes like this:
 (When using a static data export for storage, via a class like ``SurveyCTOExportStorage``,
 the *synchronize* step is skipped, but otherwise everything is the same.)
 
---------
 Examples
 --------
 
 See `this example notebook <https://github.com/orangechairlabs/py-surveydata/blob/main/src/surveydata-surveycto-examples.ipynb>`_
 for a series of usage examples.
+
+Reference documentation
+-----------------------
+
+See URLTBD for the full reference documentation.
