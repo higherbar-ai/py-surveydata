@@ -48,4 +48,6 @@ for a series of usage examples.
 Reference documentation
 -----------------------
 
-See URLTBD for the full reference documentation.
+See the full reference documentation here:
+
+    https://surveydata.readthedocs.io/
