@@ -2,16 +2,16 @@ surveydata Python Package Documentation
 =======================================
 
 .. include:: ../../README.rst
-   :start-after: =============
-    py-surveydata
-    =============
-   :end-before: Reference documentation
+    :start-after: =============
+     py-surveydata
+     =============
+    :end-before: Documentation
 
 .. toctree::
-   :maxdepth: 5
-   :caption: Reference
+    :maxdepth: 5
+    :caption: Reference
 
-   modules
+    modules
 
 Indices and tables
 ==================
