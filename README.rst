@@ -79,7 +79,7 @@ To rebuild the documentation:
 #. In a terminal window, from the project directory:
     a. ``cd docs``
     b. ``SPHINX_APIDOC_OPTIONS=members,show-inheritance sphinx-apidoc -o source ../src/surveydata --separate --force``
-    c. ``make clean install``
+    c. ``make clean html``
 
 To rebuild the distribution packages:
 
@@ -90,7 +90,7 @@ To rebuild the distribution packages:
     b. Confirm credentials and settings in ``~/.pypirc``
     c. Run ``/setup.py`` for ``bdist_wheel`` build type (*Tools... Run setup.py task...* in PyCharm)
     d. Delete old builds from ``/dist``
-    e. In terminal window:
+    e. In a terminal window:
         i. ``twine upload dist/* --verbose``
 #. For GitHub:
     a. Commit everything to GitHub and merge to ``main`` branch
