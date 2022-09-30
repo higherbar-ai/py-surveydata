@@ -69,6 +69,50 @@
              
   <section id="surveydata-python-package-documentation">
 <h1>surveydata Python Package Documentation<a class="headerlink" href="#surveydata-python-package-documentation" title="Permalink to this heading"></a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">surveydata</span></code> Python package offers flexible access to survey data and support for
+multiple local and cloud storage options.</p>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
+<p>Installing the latest version with pip:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">surveydata</span>
+</pre></div>
+</div>
+</section>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
+<p>To use the <code class="docutils literal notranslate"><span class="pre">surveydata</span></code> package, you access data from specific survey platforms via an
+appropriate <code class="docutils literal notranslate"><span class="pre">SurveyPlatform</span></code> object:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">SurveyCTOPlatform</span></code> provides support for <a class="reference external" href="https://www.surveycto.com">SurveyCTO</a> data,
+including <a class="reference external" href="https://docs.surveycto.com/02-designing-forms/01-core-concepts/03zd.field-types-text-audit.html">text audits</a></p></li>
+<li><p><em>Support for more survey platforms is coming!</em> Reach out if you have a particular need or
+are willing to contribute.</p></li>
+</ul>
+<p>All survey data must be stored somewhere, and storage is handled via an appropriate
+<code class="docutils literal notranslate"><span class="pre">StorageSystem</span></code> object:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">FileStorage</span></code> provides support for local file storage</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">S3Storage</span></code> provides support for <a class="reference external" href="https://aws.amazon.com/s3/">AWS S3</a> storage</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DynamoDBStorage</span></code> provides support <a class="reference external" href="https://aws.amazon.com/dynamodb/">AWS DynamoDB</a> storage</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SurveyCTOExportStorage</span></code> provides support for local exports from <a class="reference external" href="https://docs.surveycto.com/05-exporting-and-publishing-data/02-exporting-data-with-surveycto-desktop/01.using-desktop.html">SurveyCTO Desktop</a></p></li>
+<li><p><em>Support for more storage systems is coming!</em> Reach out if you have a particular need or
+are willing to contribute.</p></li>
+</ul>
+<p>In general, the workflow goes like this:</p>
+<ol class="arabic simple">
+<li><p>Initialize the survey platform</p></li>
+<li><p>Initialize one or more storage systems</p></li>
+<li><p>Synchronize data between the survey platform and the storage system(s) to ensure that
+data in storage is fully up-to-date</p></li>
+<li><p>Load data and/or attachments via the survey platform and storage API’s</p></li>
+</ol>
+<p>(When using a static data export for storage, via a class like <code class="docutils literal notranslate"><span class="pre">SurveyCTOExportStorage</span></code>,
+the <em>synchronize</em> step is skipped, but otherwise everything is the same.)</p>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h2>
+<p>See <a class="reference external" href="https://github.com/orangechairlabs/py-surveydata/blob/main/src/surveydata-surveycto-examples.ipynb">this example notebook</a>
+for a series of usage examples.</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
@@ -112,6 +156,7 @@
 </li>
 </ul>
 </div>
+</section>
 </section>
 <section id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading"></a></h1>
