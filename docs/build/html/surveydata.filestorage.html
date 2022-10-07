@@ -95,6 +95,17 @@
 <dd><p>Bases: <a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem" title="surveydata.storagesystem.StorageSystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">StorageSystem</span></code></a></p>
 <p>Local file system survey data storage implementation.</p>
 <dl class="py method">
+<dt class="sig sig-object py" id="surveydata.filestorage.FileStorage.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submission_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surveydata.filestorage.FileStorage.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize local file system storage for survey data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>submission_path</strong> (<em>str</em>) – Globally-unique S3 bucket name (must already exist)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="surveydata.filestorage.FileStorage.attachment_path">
 <span class="sig-name descname"><span class="pre">attachment_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submission_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachment_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#surveydata.filestorage.FileStorage.attachment_path" title="Permalink to this definition"></a></dt>
 <dd><p>Get attachment path for specific attachment.</p>

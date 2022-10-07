@@ -95,6 +95,24 @@
 <dd><p>Bases: <a class="reference internal" href="surveydata.surveyplatform.html#surveydata.surveyplatform.SurveyPlatform" title="surveydata.surveyplatform.SurveyPlatform"><code class="xref py py-class docutils literal notranslate"><span class="pre">SurveyPlatform</span></code></a></p>
 <p>SurveyCTO survey data platform implementation.</p>
 <dl class="py method">
+<dt class="sig sig-object py" id="surveydata.surveyctoplatform.SurveyCTOPlatform.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">formid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">private_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surveydata.surveyctoplatform.SurveyCTOPlatform.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize SurveyCTO for access to survey data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>server</strong> (<em>str</em>) – SurveyCTO server name (like “use”, without the https prefix or .surveycto.com suffix)</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – Email address for API access</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – Password for API access</p></li>
+<li><p><strong>formid</strong> (<em>str</em>) – SurveyCTO form ID</p></li>
+<li><p><strong>private_key</strong> (<em>str</em>) – Full text of private key, if using encryption</p></li>
+</ul>
+</dd>
+</dl>
+<p>If you’re not going to call sync_data(), you don’t need to supply any of the parameters to this constructor.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="surveydata.surveyctoplatform.SurveyCTOPlatform.get_submissions_df">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_submissions_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">storage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem" title="surveydata.storagesystem.StorageSystem"><span class="pre">StorageSystem</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#surveydata.surveyctoplatform.SurveyCTOPlatform.get_submissions_df" title="Permalink to this definition"></a></dt>
 <dd><p>Get all submission data from storage, organized into a Pandas DataFrame and optimized based on the platform.</p>
