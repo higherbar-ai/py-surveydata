@@ -95,6 +95,23 @@
 <dd><p>Bases: <a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem" title="surveydata.storagesystem.StorageSystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">StorageSystem</span></code></a></p>
 <p>AWS S3 survey data storage implementation.</p>
 <dl class="py method">
+<dt class="sig sig-object py" id="surveydata.s3storage.S3Storage.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bucket_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_name_prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aws_access_key_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aws_secret_access_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aws_session_token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surveydata.s3storage.S3Storage.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize S3 storage for survey data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bucket_name</strong> (<em>str</em>) – Globally-unique S3 bucket name (must already exist)</p></li>
+<li><p><strong>key_name_prefix</strong> (<em>str</em>) – Prefix to use for all key names (e.g., “Surveys/Form123/”)</p></li>
+<li><p><strong>aws_access_key_id</strong> (<em>str</em>) – AWS access key ID; if None, will use local config file and/or environment vars</p></li>
+<li><p><strong>aws_secret_access_key</strong> (<em>str</em>) – AWS access key secret; if None, will use local config file and/or environment vars</p></li>
+<li><p><strong>aws_session_token</strong> (<em>str</em>) – AWS session token to use, only if using temporary credentials</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="surveydata.s3storage.S3Storage.attachment_object_name">
 <span class="sig-name descname"><span class="pre">attachment_object_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submission_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachment_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#surveydata.s3storage.S3Storage.attachment_object_name" title="Permalink to this definition"></a></dt>
 <dd><p>Get attachment object name for specific attachment.</p>
