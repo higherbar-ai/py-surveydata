@@ -11,7 +11,7 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 
-"""Support for S3 as a survey data storage system."""
+"""Core interface (informal) for survey data storage systems."""
 
 from typing import BinaryIO
 import pandas as pd

@@ -74,7 +74,7 @@ To rebuild the documentation:
 
 #. For the first time:
     a. ``pip install sphinx sphinx-rtd-theme``
-#. Update version number in ``/docs/source/config.py``
+#. Update version number in ``/docs/source/conf.py``
 #. Update layout or options as needed in ``/docs/source/index.rst``
 #. In a terminal window, from the project directory:
     a. ``cd docs``
