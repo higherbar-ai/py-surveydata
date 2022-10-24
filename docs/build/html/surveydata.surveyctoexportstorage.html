@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>surveydata.surveyctoexportstorage module &mdash; surveydata 0.1.2 documentation</title>
+  <title>surveydata.surveyctoexportstorage module &mdash; surveydata 0.1.3 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -145,15 +145,18 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="surveydata.surveyctoexportstorage.SurveyCTOExportStorage.get_cursor">
-<span class="sig-name descname"><span class="pre">get_cursor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#surveydata.surveyctoexportstorage.SurveyCTOExportStorage.get_cursor" title="Permalink to this definition"></a></dt>
-<dd><p>Get cursor string from storage.</p>
+<dt class="sig sig-object py" id="surveydata.surveyctoexportstorage.SurveyCTOExportStorage.get_metadata">
+<span class="sig-name descname"><span class="pre">get_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#surveydata.surveyctoexportstorage.SurveyCTOExportStorage.get_metadata" title="Permalink to this definition"></a></dt>
+<dd><p>Get metadata string from storage.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Cursor string from storage, or empty string if no cursor exists</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>metadata_id</strong> (<em>str</em>) – Unique metadata ID (should begin and end with __ and not conflict with any submission ID)</p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>str</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Metadata string from storage, or empty string if no such metadata exists</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -281,12 +284,15 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="surveydata.surveyctoexportstorage.SurveyCTOExportStorage.store_cursor">
-<span class="sig-name descname"><span class="pre">store_cursor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cursor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surveydata.surveyctoexportstorage.SurveyCTOExportStorage.store_cursor" title="Permalink to this definition"></a></dt>
-<dd><p>Store cursor string in storage.</p>
+<dt class="sig sig-object py" id="surveydata.surveyctoexportstorage.SurveyCTOExportStorage.store_metadata">
+<span class="sig-name descname"><span class="pre">store_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surveydata.surveyctoexportstorage.SurveyCTOExportStorage.store_metadata" title="Permalink to this definition"></a></dt>
+<dd><p>Store metadata string in storage.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>cursor</strong> (<em>str</em>) – Cursor string to store.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>metadata_id</strong> (<em>str</em>) – Unique metadata ID (should begin and end with __ and not conflict with any submission ID)</p></li>
+<li><p><strong>metadata</strong> (<em>str</em>) – Metadata string to store</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>

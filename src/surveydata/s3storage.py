@@ -26,7 +26,6 @@ class S3Storage(StorageSystem):
     """AWS S3 survey data storage implementation."""
 
     # define constants
-    CURSOR_OBJECT_NAME = "__CURSOR__"                   # cursor object name for S3
     SUBMISSION_KEY_SUFFIX = ".json"                     # suffix for submission keys
     ATTACHMENT_LOCATION_PREFIX = "s3:"                  # prefix for S3 attachment location strings
 
@@ -63,34 +62,45 @@ class S3Storage(StorageSystem):
         # call base class constructor as well
         super().__init__()
 
-    def store_cursor(self, cursor: str):
+    def store_metadata(self, metadata_id: str, metadata: str):
         """
-        Store cursor string in storage.
+        Store metadata string in storage.
 
-        :param cursor: Cursor string to store.
-        :type cursor: str
+        :param metadata_id: Unique metadata ID (should begin and end with __ and not conflict with any submission ID)
+        :type metadata_id: str
+        :param metadata: Metadata string to store
+        :type metadata: str
         """
 
-        self.s3.put_object(Bucket=self.bucket_name, Key=self.key_name_prefix + self.CURSOR_OBJECT_NAME, Body=cursor)
+        # check to confirm metadata ID seems valid
+        if not metadata_id.startswith("__") or not metadata_id.endswith("__"):
+            raise ValueError(f"Metadata IDs must begin and end with __. {metadata_id} doesn't qualify.")
 
-    def get_cursor(self) -> str:
+        # store metadata
+        self.s3.put_object(Bucket=self.bucket_name, Key=self.key_name_prefix + quote_plus(metadata_id, safe=""),
+                           Body=metadata)
+
+    def get_metadata(self, metadata_id: str) -> str:
         """
-        Get cursor string from storage.
+        Get metadata string from storage.
 
-        :return: Cursor string from storage, or empty string if no cursor exists
+        :param metadata_id: Unique metadata ID (should begin and end with __ and not conflict with any submission ID)
+        :type metadata_id: str
+        :return: Metadata string from storage, or empty string if no such metadata exists
         :rtype: str
         """
 
-        # try to fetch the cursor, returning an empty string if it's not found
+        # try to fetch the metadata, returning an empty string if it's not found
         try:
-            s3object = self.s3.get_object(Bucket=self.bucket_name, Key=self.key_name_prefix + self.CURSOR_OBJECT_NAME)
+            s3object = self.s3.get_object(Bucket=self.bucket_name,
+                                          Key=self.key_name_prefix + quote_plus(metadata_id, safe=""))
         except botocore.exceptions.ClientError as e:
             if e.response['Error']['Code'] == "NoSuchKey":
                 return ""
             else:
                 raise
 
-        # return the cursor as a regular UTF-8 string
+        # return the metadata as a regular UTF-8 string
         return s3object.get('Body').read().decode('utf-8')
 
     def list_submissions(self) -> list:
@@ -288,7 +298,7 @@ class S3Storage(StorageSystem):
         # try to fetch the attachment, allowing exception if it's not found
         s3object = self.s3.get_object(Bucket=self.bucket_name, Key=attkey)
 
-        # return the cursor as a regular UTF-8 string
+        # return the attachment as a binary stream
         return s3object.get('Body')
 
     def submission_object_name(self, submission_id: str) -> str:
