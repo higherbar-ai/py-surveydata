@@ -26,7 +26,8 @@ class SurveyCTOPlatform(SurveyPlatform):
     """SurveyCTO survey data platform implementation."""
 
     # define constants
-    ID_FIELD = "KEY"                            # unique submission ID field
+    ID_FIELD = "KEY"                                    # unique submission ID field
+    CURSOR_METADATA_ID = "__CURSOR__"                   # unique metadata ID for cursor (must start and end with __)
 
     def __init__(self, server: str = "", username: str = "", password: str = "", formid: str = "",
                  private_key: str = ""):
@@ -60,7 +61,7 @@ class SurveyCTOPlatform(SurveyPlatform):
         super().__init__()
 
     def sync_data(self, storage: StorageSystem, attachment_storage: StorageSystem = None,
-                  no_attachments: bool = False) -> int:
+                  no_attachments: bool = False) -> list:
         """
         Sync survey data to storage system.
 
@@ -70,8 +71,8 @@ class SurveyCTOPlatform(SurveyPlatform):
         :type attachment_storage: StorageSystem
         :param no_attachments: True to not sync attachments
         :type no_attachments: bool
-        :return: Count of new submissions stored
-        :rtype: int
+        :return: List of new submissions stored (submission ID strings)
+        :rtype: list
         """
 
         # fire an exception if we haven't been initialized for syncing
@@ -86,7 +87,7 @@ class SurveyCTOPlatform(SurveyPlatform):
             attachment_storage = storage
 
         # fetch current cursor from storage
-        cursor = storage.get_cursor()
+        cursor = storage.get_metadata(self.CURSOR_METADATA_ID)
 
         # pull data via server API
         api_url = f"https://{self.server}.surveycto.com/api/v2/forms/data/wide/json/{self.formid}?date=" \
@@ -101,7 +102,7 @@ class SurveyCTOPlatform(SurveyPlatform):
 
         # parse and process response
         data = response.json()
-        new_submission_count = 0
+        new_submission_list = []
         if data:
             # start out presuming that the last submission is the one with the latest CompletionDate
             newcursor = data[-1]["CompletionDate"]
@@ -146,15 +147,15 @@ class SurveyCTOPlatform(SurveyPlatform):
                                 # update data to reference new location
                                 submission[field] = attlocation
 
-                    # finally, save the submission itself and increment our counter
+                    # finally, save the submission itself and remember in list of new submissions
                     storage.store_submission(subid, submission)
-                    new_submission_count += 1
+                    new_submission_list += [subid]
 
             # update our cursor, if it changed
             if newcursor != cursor:
-                storage.store_cursor(newcursor)
+                storage.store_metadata(self.CURSOR_METADATA_ID, newcursor)
 
-        return new_submission_count
+        return new_submission_list
 
     @staticmethod
     def get_submissions_df(storage: StorageSystem) -> pd.DataFrame:

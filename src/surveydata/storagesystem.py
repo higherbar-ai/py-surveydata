@@ -24,20 +24,24 @@ class StorageSystem(object):
         """Initialize storage system."""
         pass
 
-    def store_cursor(self, cursor: str):
+    def store_metadata(self, metadata_id: str, metadata: str):
         """
-        Store cursor string in storage.
+        Store metadata string in storage.
 
-        :param cursor: Cursor string to store.
-        :type cursor: str
+        :param metadata_id: Unique metadata ID (should begin and end with __ and not conflict with any submission ID)
+        :type metadata_id: str
+        :param metadata: Metadata string to store
+        :type metadata: str
         """
         raise NotImplementedError
 
-    def get_cursor(self) -> str:
+    def get_metadata(self, metadata_id: str) -> str:
         """
-        Get cursor string from storage.
+        Get metadata string from storage.
 
-        :return: Cursor string from storage, or empty string if no cursor exists
+        :param metadata_id: Unique metadata ID (should not conflict with any submission ID)
+        :type metadata_id: str
+        :return: Metadata string from storage, or empty string if no such metadata exists
         :rtype: str
         """
         raise NotImplementedError

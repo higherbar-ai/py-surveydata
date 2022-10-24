@@ -26,7 +26,7 @@ class SurveyPlatform(object):
         pass
 
     def sync_data(self, storage: StorageSystem, attachment_storage: StorageSystem = None,
-                  no_attachments: bool = False) -> int:
+                  no_attachments: bool = False) -> list:
         """
         Sync survey data to storage system.
 
@@ -36,8 +36,8 @@ class SurveyPlatform(object):
         :type attachment_storage: StorageSystem
         :param no_attachments: True to not sync attachments
         :type no_attachments: bool
-        :return: Count of new submissions stored
-        :rtype: int
+        :return: List of new submissions stored (submission ID strings)
+        :rtype: list
         """
         raise NotImplementedError
 

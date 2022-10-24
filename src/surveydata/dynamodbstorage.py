@@ -24,8 +24,8 @@ class DynamoDBStorage(StorageSystem):
     """AWS DynamoDB survey data storage implementation."""
 
     # define constants
-    CURSOR_ID = "__CURSOR__"                        # faux submission ID for cursor
-    CURSOR_KEY = "Cursor"                           # key for cursor value
+    METADATA_KEY = "Metadata"                           # key for metadata value
+    METADATA_MAX_SIZE = 409600                          # max size of metadata items in DynamoDB
 
     def __init__(self, aws_region: str, table_name: str, id_field_name: str, partition_key_name: str = "",
                  partition_key_value: str = "", aws_access_key_id: str = None, aws_secret_access_key: str = None,
@@ -74,34 +74,51 @@ class DynamoDBStorage(StorageSystem):
         # call base class constructor as well
         super().__init__()
 
-    def store_cursor(self, cursor: str):
+    def store_metadata(self, metadata_id: str, metadata: str):
         """
-        Store cursor string in storage.
+        Store metadata string in storage.
 
-        :param cursor: Cursor string to store.
-        :type cursor: str
+        :param metadata_id: Unique metadata ID (should begin and end with __ and not conflict with any submission ID)
+        :type metadata_id: str
+        :param metadata: Metadata string to store
+        :type metadata: str
         """
 
-        # store cursor as faux submission with CURSOR_ID as the submission ID
-        cursor_dict = self.submission_primary_key(self.CURSOR_ID)
-        cursor_dict[self.CURSOR_KEY] = cursor
-        self.table.put_item(Item=cursor_dict)
+        # check to confirm metadata ID seems valid
+        if not metadata_id.startswith("__") or not metadata_id.endswith("__"):
+            raise ValueError(f"Metadata IDs must begin and end with __. {metadata_id} doesn't qualify.")
 
-    def get_cursor(self) -> str:
+        # check to confirm that metadata+id doesn't exceed DynamoDB's item size limit
+        item_len = len((self.id_field_name + metadata_id).encode("utf-8"))
+        if self.partition_key_name:
+            item_len += len((self.partition_key_name + self.partition_key_value).encode("utf-8"))
+        item_len += len((self.METADATA_KEY + metadata).encode("utf-8"))
+        if item_len > self.METADATA_MAX_SIZE:
+            raise ValueError(f"DynamoDB items cannot exceed {self.METADATA_MAX_SIZE} bytes in length. "
+                             f"Metadata {metadata_id} is too big ({item_len} bytes).")
+
+        # store metadata as faux submission with metadata ID as the submission ID
+        metadata_dict = self.submission_primary_key(metadata_id)
+        metadata_dict[self.METADATA_KEY] = metadata
+        self.table.put_item(Item=metadata_dict)
+
+    def get_metadata(self, metadata_id: str) -> str:
         """
-        Get cursor string from storage.
+        Get metadata string from storage.
 
-        :return: Cursor string from storage, or empty string if no cursor exists
+        :param metadata_id: Unique metadata ID (should begin and end with __ and not conflict with any submission ID)
+        :type metadata_id: str
+        :return: Metadata string from storage, or empty string if no such metadata exists
         :rtype: str
         """
 
-        # try to fetch the cursor
-        response = self.table.get_item(Key=self.submission_primary_key(self.CURSOR_ID))
+        # try to fetch the metadata
+        response = self.table.get_item(Key=self.submission_primary_key(metadata_id))
         if "Item" in response:
-            # cursor found, so return cursor value
-            return response["Item"][self.CURSOR_KEY]
+            # metadata found, so return metadata value
+            return response["Item"][self.METADATA_KEY]
         else:
-            # cursor not found, so return empty string
+            # metadata not found, so return empty string
             return ""
 
     def list_submissions(self) -> list:
@@ -128,8 +145,8 @@ class DynamoDBStorage(StorageSystem):
         while True:
             if "Items" in response:
                 for item in response["Items"]:
-                    # add any non-cursor submissions to the list to return
-                    if item[self.id_field_name] != self.CURSOR_ID:
+                    # add any non-metadata submissions to the list to return
+                    if not item[self.id_field_name].startswith("__") or not item[self.id_field_name].endswith("__"):
                         submissions += [item[self.id_field_name]]
 
             # keep on to the next page if there is one, otherwise break from loop
