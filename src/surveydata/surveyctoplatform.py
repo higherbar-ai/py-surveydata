@@ -61,7 +61,7 @@ class SurveyCTOPlatform(SurveyPlatform):
         super().__init__()
 
     def sync_data(self, storage: StorageSystem, attachment_storage: StorageSystem = None,
-                  no_attachments: bool = False) -> list:
+                  no_attachments: bool = False, review_statuses: list = None) -> list:
         """
         Sync survey data to storage system.
 
@@ -71,6 +71,9 @@ class SurveyCTOPlatform(SurveyPlatform):
         :type attachment_storage: StorageSystem
         :param no_attachments: True to not sync attachments
         :type no_attachments: bool
+        :param review_statuses: List of review statuses to include (any combo of "approved", "pending", "rejected";
+            if not specified, syncs only approved submissions)
+        :type review_statuses: list
         :return: List of new submissions stored (submission ID strings)
         :rtype: list
         """
@@ -92,6 +95,10 @@ class SurveyCTOPlatform(SurveyPlatform):
         # pull data via server API
         api_url = f"https://{self.server}.surveycto.com/api/v2/forms/data/wide/json/{self.formid}?date=" \
                   + quote(cursor if cursor else "0")
+        # (with non-default list of review statuses, if supplied)
+        if review_statuses is not None and review_statuses:
+            api_url += "&r=" + quote("|".join(review_statuses))
+        # (and with private key, if supplied)
         if self.private_key:
             response = requests.post(api_url, files={"private_key": self.private_key}, auth=self.creds)
         else:
@@ -206,7 +213,7 @@ class SurveyCTOPlatform(SurveyPlatform):
         elif location_strings is not None:
             df = None
             for subid, locstr in location_strings.items():
-                if locstr:
+                if not pd.isna(locstr) and locstr:
                     row_df = SurveyCTOPlatform._load_text_audit(storage, locstr)
                     row_df[SurveyCTOPlatform.ID_FIELD] = subid
                     if df is None:
@@ -215,8 +222,9 @@ class SurveyCTOPlatform(SurveyPlatform):
                         df = pd.concat([df, row_df], copy=False, ignore_index=True, sort=False)
 
             # set to index by KEY
-            df.set_index([SurveyCTOPlatform.ID_FIELD], inplace=True)
-            df = df.sort_index()
+            if df is not None:
+                df.set_index([SurveyCTOPlatform.ID_FIELD], inplace=True)
+                df = df.sort_index()
         else:
             raise ValueError("Pass either location_string or location_strings to load one or more text audits.")
 
