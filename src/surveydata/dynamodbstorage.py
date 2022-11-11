@@ -18,6 +18,8 @@ from surveydata.storagesystem import StorageSystem
 import boto3
 from boto3.dynamodb import conditions
 from typing import BinaryIO
+import datetime
+import pickle
 
 
 class DynamoDBStorage(StorageSystem):
@@ -84,23 +86,7 @@ class DynamoDBStorage(StorageSystem):
         :type metadata: str
         """
 
-        # check to confirm metadata ID seems valid
-        if not metadata_id.startswith("__") or not metadata_id.endswith("__"):
-            raise ValueError(f"Metadata IDs must begin and end with __. {metadata_id} doesn't qualify.")
-
-        # check to confirm that metadata+id doesn't exceed DynamoDB's item size limit
-        item_len = len((self.id_field_name + metadata_id).encode("utf-8"))
-        if self.partition_key_name:
-            item_len += len((self.partition_key_name + self.partition_key_value).encode("utf-8"))
-        item_len += len((self.METADATA_KEY + metadata).encode("utf-8"))
-        if item_len > self.METADATA_MAX_SIZE:
-            raise ValueError(f"DynamoDB items cannot exceed {self.METADATA_MAX_SIZE} bytes in length. "
-                             f"Metadata {metadata_id} is too big ({item_len} bytes).")
-
-        # store metadata as faux submission with metadata ID as the submission ID
-        metadata_dict = self.submission_primary_key(metadata_id)
-        metadata_dict[self.METADATA_KEY] = metadata
-        self.table.put_item(Item=metadata_dict)
+        self._store_metadata(metadata_id, metadata_str=metadata)
 
     def get_metadata(self, metadata_id: str) -> str:
         """
@@ -121,6 +107,70 @@ class DynamoDBStorage(StorageSystem):
             # metadata not found, so return empty string
             return ""
 
+    def store_metadata_binary(self, metadata_id: str, metadata: bytes):
+        """
+        Store metadata bytes in storage.
+
+        :param metadata_id: Unique metadata ID (should begin and end with __ and not conflict with any submission ID)
+        :type metadata_id: str
+        :param metadata: Metadata bytes to store
+        :type metadata: bytes
+        """
+
+        self._store_metadata(metadata_id, metadata_bytes=metadata)
+
+    def _store_metadata(self, metadata_id: str, metadata_bytes: bytes = None, metadata_str: str = None):
+        """
+        Internal function to store metadata as string or binary.
+
+        :param metadata_id: Unique metadata ID (should begin and end with __ and not conflict with any submission ID)
+        :type metadata_id: str
+        :param metadata_bytes: Metadata bytes to store
+        :type metadata_bytes: bytes
+        :param metadata_str: Metadata string to store
+        :type metadata_str: str
+        """
+
+        # check to confirm metadata ID seems valid
+        if not metadata_id.startswith("__") or not metadata_id.endswith("__"):
+            raise ValueError(f"Metadata IDs must begin and end with __. {metadata_id} doesn't qualify.")
+
+        # check to confirm that metadata+id doesn't exceed DynamoDB's item size limit
+        item_len = len((self.id_field_name + metadata_id).encode("utf-8"))
+        if self.partition_key_name:
+            item_len += len((self.partition_key_name + self.partition_key_value).encode("utf-8"))
+        if metadata_bytes is not None:
+            item_len += (len(self.METADATA_KEY.encode("utf-8")) + len(metadata_bytes))
+        else:
+            item_len += len((self.METADATA_KEY + metadata_str).encode("utf-8"))
+        if item_len > self.METADATA_MAX_SIZE:
+            raise ValueError(f"DynamoDB items cannot exceed {self.METADATA_MAX_SIZE} bytes in length. "
+                             f"Metadata {metadata_id} is too big ({item_len} bytes).")
+
+        # store metadata as faux submission with metadata ID as the submission ID
+        metadata_dict = self.submission_primary_key(metadata_id)
+        metadata_dict[self.METADATA_KEY] = metadata_bytes if metadata_bytes is not None else metadata_str
+        self.table.put_item(Item=metadata_dict)
+
+    def get_metadata_binary(self, metadata_id: str) -> bytes:
+        """
+        Get metadata bytes from storage.
+
+        :param metadata_id: Unique metadata ID (should not conflict with any submission ID)
+        :type metadata_id: str
+        :return: Metadata bytes from storage, or empty bytes array if no such metadata exists
+        :rtype: bytes
+        """
+
+        # try to fetch the metadata
+        response = self.table.get_item(Key=self.submission_primary_key(metadata_id))
+        if "Item" in response:
+            # metadata found, so return metadata value
+            return bytes(response["Item"][self.METADATA_KEY])
+        else:
+            # metadata not found, so return empty bytes
+            return bytes()
+
     def list_submissions(self) -> list:
         """
         List all submissions currently in storage.
@@ -133,11 +183,11 @@ class DynamoDBStorage(StorageSystem):
         if self.partition_key_name:
             response = self.table.query(
                 KeyConditionExpression=conditions.Key(self.partition_key_name).eq(self.partition_key_value),
-                ProjectionExpression="#id", ExpressionAttributeNames = {"#id": self.id_field_name})
+                ProjectionExpression="#id", ExpressionAttributeNames={"#id": self.id_field_name})
             page_type = "query"
         else:
             response = self.table.scan(ProjectionExpression="#id",
-                                       ExpressionAttributeNames = {"#id": self.id_field_name})
+                                       ExpressionAttributeNames={"#id": self.id_field_name})
             page_type = "scan"
 
         # loop through all found submissions on all pages of results
@@ -154,11 +204,11 @@ class DynamoDBStorage(StorageSystem):
                 if page_type == "query":
                     response = self.table.query(
                         KeyConditionExpression=conditions.Key(self.partition_key_name).eq(self.partition_key_value),
-                        ProjectionExpression="#id", ExpressionAttributeNames = {"#id": self.id_field_name},
+                        ProjectionExpression="#id", ExpressionAttributeNames={"#id": self.id_field_name},
                         ExclusiveStartKey=response["LastEvaluatedKey"])
                 else:
                     response = self.table.scan(ProjectionExpression="#id",
-                                               ExpressionAttributeNames = {"#id": self.id_field_name},
+                                               ExpressionAttributeNames={"#id": self.id_field_name},
                                                ExclusiveStartKey=response["LastEvaluatedKey"])
             else:
                 break
@@ -179,7 +229,7 @@ class DynamoDBStorage(StorageSystem):
         # query for submission (only fetching the ID)
         response = self.table.get_item(Key=self.submission_primary_key(submission_id),
                                        ProjectionExpression="#id",
-                                       ExpressionAttributeNames = {"#id": self.id_field_name})
+                                       ExpressionAttributeNames={"#id": self.id_field_name})
         # return success only if the submission was found
         return "Item" in response
 
@@ -302,3 +352,27 @@ class DynamoDBStorage(StorageSystem):
             return {self.partition_key_name: self.partition_key_value, self.id_field_name: submission_id}
         else:
             return {self.id_field_name: submission_id}
+
+    def set_data_timezone(self, tz: datetime.timezone):
+        """
+        Set the timezone for timestamps in the data.
+
+        :param tz: Timezone for timestamps in the data
+        :type tz: datetime.timezone
+        """
+
+        self.store_metadata_binary(self.DATA_TZ_METADATA_ID, pickle.dumps(tz))
+
+    def get_data_timezone(self) -> datetime.timezone:
+        """
+        Get the timezone for timestamps in the data.
+
+        :return: Timezone for timestamps in the data (defaults to datetime.timezone.utc if unknown)
+        :rtype: datetime.timezone
+        """
+
+        # fetch metadata if possible
+        tz_metadata = self.get_metadata_binary(self.DATA_TZ_METADATA_ID)
+
+        # return stored timezone or UTC if unknown
+        return pickle.loads(tz_metadata) if len(tz_metadata) > 0 else datetime.timezone.utc

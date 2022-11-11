@@ -18,7 +18,7 @@ from surveydata.surveyplatform import SurveyPlatform
 from surveydata.storagesystem import StorageSystem
 import requests
 from urllib.parse import quote
-from datetime import datetime
+import datetime
 import pandas as pd
 
 
@@ -113,16 +113,16 @@ class SurveyCTOPlatform(SurveyPlatform):
         if data:
             # start out presuming that the last submission is the one with the latest CompletionDate
             newcursor = data[-1]["CompletionDate"]
-            newcursor_dt = datetime.strptime(newcursor, "%b %d, %Y %I:%M:%S %p")
+            newcursor_dt = datetime.datetime.strptime(newcursor, "%b %d, %Y %I:%M:%S %p")
 
             # loop through to process each submission
             for submission in data:
                 # if the submission's CompletionDate is greater than our presumed new cursor, use it instead
                 #   (this is out of an abundance of caution, as it appears that SurveyCTO sends submissions in
                 #    CompletionDate order)
-                if datetime.strptime(submission["CompletionDate"], "%b %d, %Y %I:%M:%S %p") > newcursor_dt:
+                if datetime.datetime.strptime(submission["CompletionDate"], "%b %d, %Y %I:%M:%S %p") > newcursor_dt:
                     newcursor = submission["CompletionDate"]
-                    newcursor_dt = datetime.strptime(newcursor, "%b %d, %Y %I:%M:%S %p")
+                    newcursor_dt = datetime.datetime.strptime(newcursor, "%b %d, %Y %I:%M:%S %p")
 
                 # generally, we want to write submissions to storage, even if we already have them — but, for
                 # efficiency reasons, we don't want to keep re-storing the most recent submission when it matches
@@ -161,6 +161,9 @@ class SurveyCTOPlatform(SurveyPlatform):
             # update our cursor, if it changed
             if newcursor != cursor:
                 storage.store_metadata(self.CURSOR_METADATA_ID, newcursor)
+
+                # since the cursor changed, go ahead an set the appropriate (API) timezone as well
+                storage.set_data_timezone(datetime.timezone.utc)
 
         return new_submission_list
 

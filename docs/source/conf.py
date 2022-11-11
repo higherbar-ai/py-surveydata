@@ -16,7 +16,7 @@ sys.path.insert(0, os.path.abspath('../../src'))
 project = 'surveydata'
 copyright = '2022, Orange Chair Labs LLC'
 author = 'Orange Chair Labs LLC'
-release = '0.1.4'
+release = '0.1.5'
 
 
 # -- General configuration ---------------------------------------------------

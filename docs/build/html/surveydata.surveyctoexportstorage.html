@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>surveydata.surveyctoexportstorage module &mdash; surveydata 0.1.4 documentation</title>
+  <title>surveydata.surveyctoexportstorage module &mdash; surveydata 0.1.5 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -91,18 +91,19 @@
 <p>Read-only support for SurveyCTO survey data exports.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="surveydata.surveyctoexportstorage.SurveyCTOExportStorage">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surveydata.surveyctoexportstorage.</span></span><span class="sig-name descname"><span class="pre">SurveyCTOExportStorage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">export_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachments_available</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surveydata.surveyctoexportstorage.SurveyCTOExportStorage" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surveydata.surveyctoexportstorage.</span></span><span class="sig-name descname"><span class="pre">SurveyCTOExportStorage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">export_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachments_available</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_timezone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">timezone</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surveydata.surveyctoexportstorage.SurveyCTOExportStorage" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem" title="surveydata.storagesystem.StorageSystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">StorageSystem</span></code></a></p>
 <p>Implementation of storage interface for read-only access to SurveyCTO survey data exports.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="surveydata.surveyctoexportstorage.SurveyCTOExportStorage.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">export_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachments_available</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surveydata.surveyctoexportstorage.SurveyCTOExportStorage.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">export_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachments_available</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_timezone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">timezone</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surveydata.surveyctoexportstorage.SurveyCTOExportStorage.__init__" title="Permalink to this definition"></a></dt>
 <dd><p>Initialize SurveyCTO export data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>export_file</strong> (<em>str</em>) – Path to the export file</p></li>
 <li><p><strong>attachments_available</strong> (<em>bool</em>) – True if attachments available from SurveyCTO Desktop (in media subfolder)</p></li>
+<li><p><strong>data_timezone</strong> (<em>datetime.timezone</em>) – Timezone for timestamps in the data (defaults to current timezone if not specified)</p></li>
 </ul>
 </dd>
 </dl>
@@ -145,6 +146,20 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="surveydata.surveyctoexportstorage.SurveyCTOExportStorage.get_data_timezone">
+<span class="sig-name descname"><span class="pre">get_data_timezone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">timezone</span></span></span><a class="headerlink" href="#surveydata.surveyctoexportstorage.SurveyCTOExportStorage.get_data_timezone" title="Permalink to this definition"></a></dt>
+<dd><p>Get the timezone for timestamps in the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Timezone for timestamps in the data (defaults to datetime.timezone.utc if unknown)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>datetime.timezone</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="surveydata.surveyctoexportstorage.SurveyCTOExportStorage.get_metadata">
 <span class="sig-name descname"><span class="pre">get_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#surveydata.surveyctoexportstorage.SurveyCTOExportStorage.get_metadata" title="Permalink to this definition"></a></dt>
 <dd><p>Get metadata string from storage.</p>
@@ -157,6 +172,23 @@
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.surveyctoexportstorage.SurveyCTOExportStorage.get_metadata_binary">
+<span class="sig-name descname"><span class="pre">get_metadata_binary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="headerlink" href="#surveydata.surveyctoexportstorage.SurveyCTOExportStorage.get_metadata_binary" title="Permalink to this definition"></a></dt>
+<dd><p>Get metadata bytes from storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>metadata_id</strong> (<em>str</em>) – Unique metadata ID (should not conflict with any submission ID)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Metadata bytes from storage, or empty bytes array if no such metadata exists</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bytes</p>
 </dd>
 </dl>
 </dd></dl>
@@ -263,6 +295,17 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="surveydata.surveyctoexportstorage.SurveyCTOExportStorage.set_data_timezone">
+<span class="sig-name descname"><span class="pre">set_data_timezone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tz</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">timezone</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surveydata.surveyctoexportstorage.SurveyCTOExportStorage.set_data_timezone" title="Permalink to this definition"></a></dt>
+<dd><p>Set the timezone for timestamps in the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>tz</strong> (<em>datetime.timezone</em>) – Timezone for timestamps in the data</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="surveydata.surveyctoexportstorage.SurveyCTOExportStorage.store_attachment">
 <span class="sig-name descname"><span class="pre">store_attachment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submission_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachment_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachment_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BinaryIO</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#surveydata.surveyctoexportstorage.SurveyCTOExportStorage.store_attachment" title="Permalink to this definition"></a></dt>
 <dd><p>Store submission attachment in storage.</p>
@@ -292,6 +335,20 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>metadata_id</strong> (<em>str</em>) – Unique metadata ID (should begin and end with __ and not conflict with any submission ID)</p></li>
 <li><p><strong>metadata</strong> (<em>str</em>) – Metadata string to store</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.surveyctoexportstorage.SurveyCTOExportStorage.store_metadata_binary">
+<span class="sig-name descname"><span class="pre">store_metadata_binary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surveydata.surveyctoexportstorage.SurveyCTOExportStorage.store_metadata_binary" title="Permalink to this definition"></a></dt>
+<dd><p>Store metadata bytes in storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>metadata_id</strong> (<em>str</em>) – Unique metadata ID (should begin and end with __ and not conflict with any submission ID)</p></li>
+<li><p><strong>metadata</strong> (<em>bytes</em>) – Metadata bytes to store</p></li>
 </ul>
 </dd>
 </dl>

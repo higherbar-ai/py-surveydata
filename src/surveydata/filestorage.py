@@ -20,6 +20,8 @@ import json
 import os
 import shutil
 from typing import BinaryIO
+import datetime
+import pickle
 
 
 class FileStorage(StorageSystem):
@@ -46,7 +48,6 @@ class FileStorage(StorageSystem):
 
         # call base class constructor as well
         super().__init__()
-
 
     def store_metadata(self, metadata_id: str, metadata: str):
         """
@@ -84,6 +85,43 @@ class FileStorage(StorageSystem):
 
         # if we didn't find the metadata, return an empty string
         return ""
+
+    def store_metadata_binary(self, metadata_id: str, metadata: bytes):
+        """
+        Store metadata bytes in storage.
+
+        :param metadata_id: Unique metadata ID (should begin and end with __ and not conflict with any submission ID)
+        :type metadata_id: str
+        :param metadata: Metadata bytes to store
+        :type metadata: bytes
+        """
+
+        # check to confirm metadata ID seems valid
+        if not metadata_id.startswith("__") or not metadata_id.endswith("__"):
+            raise ValueError(f"Metadata IDs must begin and end with __. {metadata_id} doesn't qualify.")
+
+        # store metadata
+        with open(os.path.join(self.submission_path, quote_plus(metadata_id, safe="")), "wb") \
+                as metadata_file:
+            metadata_file.write(metadata)
+
+    def get_metadata_binary(self, metadata_id: str) -> bytes:
+        """
+        Get metadata bytes from storage.
+
+        :param metadata_id: Unique metadata ID (should not conflict with any submission ID)
+        :type metadata_id: str
+        :return: Metadata bytes from storage, or empty bytes array if no such metadata exists
+        :rtype: bytes
+        """
+
+        metadata_path = os.path.join(self.submission_path, quote_plus(metadata_id, safe=""))
+        if os.path.isfile(metadata_path):
+            with open(metadata_path, "rb") as metadata_file:
+                return metadata_file.read()
+
+        # if we didn't find the metadata, return an empty bytes object
+        return bytes()
 
     def list_submissions(self) -> list:
         """
@@ -336,3 +374,27 @@ class FileStorage(StorageSystem):
 
             # extract path from location string
             return attachment_location[len(self.ATTACHMENT_LOCATION_PREFIX):]
+
+    def set_data_timezone(self, tz: datetime.timezone):
+        """
+        Set the timezone for timestamps in the data.
+
+        :param tz: Timezone for timestamps in the data
+        :type tz: datetime.timezone
+        """
+
+        self.store_metadata_binary(self.DATA_TZ_METADATA_ID, pickle.dumps(tz))
+
+    def get_data_timezone(self) -> datetime.timezone:
+        """
+        Get the timezone for timestamps in the data.
+
+        :return: Timezone for timestamps in the data (defaults to datetime.timezone.utc if unknown)
+        :rtype: datetime.timezone
+        """
+
+        # fetch metadata if possible
+        tz_metadata = self.get_metadata_binary(self.DATA_TZ_METADATA_ID)
+
+        # return stored timezone or UTC if unknown
+        return pickle.loads(tz_metadata) if len(tz_metadata) > 0 else datetime.timezone.utc
