@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>surveydata.s3storage module &mdash; surveydata 0.1.4 documentation</title>
+  <title>surveydata.s3storage module &mdash; surveydata 0.1.5 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -168,6 +168,20 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="surveydata.s3storage.S3Storage.get_data_timezone">
+<span class="sig-name descname"><span class="pre">get_data_timezone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">timezone</span></span></span><a class="headerlink" href="#surveydata.s3storage.S3Storage.get_data_timezone" title="Permalink to this definition"></a></dt>
+<dd><p>Get the timezone for timestamps in the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Timezone for timestamps in the data (defaults to datetime.timezone.utc if unknown)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>datetime.timezone</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="surveydata.s3storage.S3Storage.get_metadata">
 <span class="sig-name descname"><span class="pre">get_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#surveydata.s3storage.S3Storage.get_metadata" title="Permalink to this definition"></a></dt>
 <dd><p>Get metadata string from storage.</p>
@@ -180,6 +194,23 @@
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.s3storage.S3Storage.get_metadata_binary">
+<span class="sig-name descname"><span class="pre">get_metadata_binary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="headerlink" href="#surveydata.s3storage.S3Storage.get_metadata_binary" title="Permalink to this definition"></a></dt>
+<dd><p>Get metadata bytes from storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>metadata_id</strong> (<em>str</em>) – Unique metadata ID (should not conflict with any submission ID)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Metadata bytes from storage, or empty bytes array if no such metadata exists</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bytes</p>
 </dd>
 </dl>
 </dd></dl>
@@ -272,6 +303,17 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="surveydata.s3storage.S3Storage.set_data_timezone">
+<span class="sig-name descname"><span class="pre">set_data_timezone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tz</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">timezone</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surveydata.s3storage.S3Storage.set_data_timezone" title="Permalink to this definition"></a></dt>
+<dd><p>Set the timezone for timestamps in the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>tz</strong> (<em>datetime.timezone</em>) – Timezone for timestamps in the data</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="surveydata.s3storage.S3Storage.store_attachment">
 <span class="sig-name descname"><span class="pre">store_attachment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submission_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachment_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachment_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BinaryIO</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#surveydata.s3storage.S3Storage.store_attachment" title="Permalink to this definition"></a></dt>
 <dd><p>Store submission attachment in storage.</p>
@@ -301,6 +343,20 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>metadata_id</strong> (<em>str</em>) – Unique metadata ID (should begin and end with __ and not conflict with any submission ID)</p></li>
 <li><p><strong>metadata</strong> (<em>str</em>) – Metadata string to store</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.s3storage.S3Storage.store_metadata_binary">
+<span class="sig-name descname"><span class="pre">store_metadata_binary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surveydata.s3storage.S3Storage.store_metadata_binary" title="Permalink to this definition"></a></dt>
+<dd><p>Store metadata bytes in storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>metadata_id</strong> (<em>str</em>) – Unique metadata ID (should begin and end with __ and not conflict with any submission ID)</p></li>
+<li><p><strong>metadata</strong> (<em>bytes</em>) – Metadata bytes to store</p></li>
 </ul>
 </dd>
 </dl>

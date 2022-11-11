@@ -88,7 +88,7 @@ To rebuild the distribution packages:
 #. For the PyPI package:
     a. Update version number (and any build options) in ``/setup.py``
     b. Confirm credentials and settings in ``~/.pypirc``
-    c. Run ``/setup.py`` for ``bdist_wheel`` build type (*Tools... Run setup.py task...* in PyCharm)
+    c. Run ``/setup.py`` for ``bdist_wheel`` and/or ``sdist`` build types (*Tools... Run setup.py task...* in PyCharm)
     d. Delete old builds from ``/dist``
     e. In a terminal window:
         i. ``twine upload dist/* --verbose``

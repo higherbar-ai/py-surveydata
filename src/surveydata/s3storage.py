@@ -20,6 +20,8 @@ import botocore.exceptions
 from urllib.parse import quote_plus, unquote_plus
 import json
 from typing import BinaryIO
+import datetime
+import pickle
 
 
 class S3Storage(StorageSystem):
@@ -72,13 +74,8 @@ class S3Storage(StorageSystem):
         :type metadata: str
         """
 
-        # check to confirm metadata ID seems valid
-        if not metadata_id.startswith("__") or not metadata_id.endswith("__"):
-            raise ValueError(f"Metadata IDs must begin and end with __. {metadata_id} doesn't qualify.")
-
-        # store metadata
-        self.s3.put_object(Bucket=self.bucket_name, Key=self.key_name_prefix + quote_plus(metadata_id, safe=""),
-                           Body=metadata)
+        # convert string to byte array and store
+        self.store_metadata_binary(metadata_id, metadata.encode('utf-8'))
 
     def get_metadata(self, metadata_id: str) -> str:
         """
@@ -90,18 +87,49 @@ class S3Storage(StorageSystem):
         :rtype: str
         """
 
+        # fetch bytes, decode, and return
+        return self.get_metadata_binary(metadata_id).decode('utf-8')
+
+    def store_metadata_binary(self, metadata_id: str, metadata: bytes):
+        """
+        Store metadata bytes in storage.
+
+        :param metadata_id: Unique metadata ID (should begin and end with __ and not conflict with any submission ID)
+        :type metadata_id: str
+        :param metadata: Metadata bytes to store
+        :type metadata: bytes
+        """
+
+        # check to confirm metadata ID seems valid
+        if not metadata_id.startswith("__") or not metadata_id.endswith("__"):
+            raise ValueError(f"Metadata IDs must begin and end with __. {metadata_id} doesn't qualify.")
+
+        # store metadata
+        self.s3.put_object(Bucket=self.bucket_name, Key=self.key_name_prefix + quote_plus(metadata_id, safe=""),
+                           Body=metadata)
+
+    def get_metadata_binary(self, metadata_id: str) -> bytes:
+        """
+        Get metadata bytes from storage.
+
+        :param metadata_id: Unique metadata ID (should not conflict with any submission ID)
+        :type metadata_id: str
+        :return: Metadata bytes from storage, or empty bytes array if no such metadata exists
+        :rtype: bytes
+        """
+
         # try to fetch the metadata, returning an empty string if it's not found
         try:
             s3object = self.s3.get_object(Bucket=self.bucket_name,
                                           Key=self.key_name_prefix + quote_plus(metadata_id, safe=""))
         except botocore.exceptions.ClientError as e:
             if e.response['Error']['Code'] == "NoSuchKey":
-                return ""
+                return bytes()
             else:
                 raise
 
-        # return the metadata as a regular UTF-8 string
-        return s3object.get('Body').read().decode('utf-8')
+        # return the metadata as bytes
+        return s3object.get('Body').read()
 
     def list_submissions(self) -> list:
         """
@@ -389,3 +417,27 @@ class S3Storage(StorageSystem):
 
             # extract object key from location string
             return attachment_location[len(self.ATTACHMENT_LOCATION_PREFIX):]
+
+    def set_data_timezone(self, tz: datetime.timezone):
+        """
+        Set the timezone for timestamps in the data.
+
+        :param tz: Timezone for timestamps in the data
+        :type tz: datetime.timezone
+        """
+
+        self.store_metadata_binary(self.DATA_TZ_METADATA_ID, pickle.dumps(tz))
+
+    def get_data_timezone(self) -> datetime.timezone:
+        """
+        Get the timezone for timestamps in the data.
+
+        :return: Timezone for timestamps in the data (defaults to datetime.timezone.utc if unknown)
+        :rtype: datetime.timezone
+        """
+
+        # fetch metadata if possible
+        tz_metadata = self.get_metadata_binary(self.DATA_TZ_METADATA_ID)
+
+        # return stored timezone or UTC if unknown
+        return pickle.loads(tz_metadata) if len(tz_metadata) > 0 else datetime.timezone.utc

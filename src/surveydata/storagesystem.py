@@ -15,10 +15,14 @@
 
 from typing import BinaryIO
 import pandas as pd
+import datetime
 
 
 class StorageSystem(object):
     """Largely-abstract base class for survey data storage systems."""
+
+    # define constants
+    DATA_TZ_METADATA_ID = "__TIMEZONE__"            # unique metadata ID for data timezone (must start and end with __)
 
     def __init__(self):
         """Initialize storage system."""
@@ -43,6 +47,28 @@ class StorageSystem(object):
         :type metadata_id: str
         :return: Metadata string from storage, or empty string if no such metadata exists
         :rtype: str
+        """
+        raise NotImplementedError
+
+    def store_metadata_binary(self, metadata_id: str, metadata: bytes):
+        """
+        Store metadata bytes in storage.
+
+        :param metadata_id: Unique metadata ID (should begin and end with __ and not conflict with any submission ID)
+        :type metadata_id: str
+        :param metadata: Metadata bytes to store
+        :type metadata: bytes
+        """
+        raise NotImplementedError
+
+    def get_metadata_binary(self, metadata_id: str) -> bytes:
+        """
+        Get metadata bytes from storage.
+
+        :param metadata_id: Unique metadata ID (should not conflict with any submission ID)
+        :type metadata_id: str
+        :return: Metadata bytes from storage, or empty bytes array if no such metadata exists
+        :rtype: bytes
         """
         raise NotImplementedError
 
@@ -205,5 +231,23 @@ class StorageSystem(object):
         :rtype: BinaryIO
 
         Must pass either attachment_location or both submission_id and attachment_name.
+        """
+        raise NotImplementedError
+
+    def set_data_timezone(self, tz: datetime.timezone):
+        """
+        Set the timezone for timestamps in the data.
+
+        :param tz: Timezone for timestamps in the data
+        :type tz: datetime.timezone
+        """
+        raise NotImplementedError
+
+    def get_data_timezone(self) -> datetime.timezone:
+        """
+        Get the timezone for timestamps in the data.
+
+        :return: Timezone for timestamps in the data (defaults to datetime.timezone.utc if unknown)
+        :rtype: datetime.timezone
         """
         raise NotImplementedError

@@ -18,6 +18,7 @@ from surveydata.storagesystem import StorageSystem
 import csv
 import os
 from typing import BinaryIO
+import datetime
 
 
 class SurveyCTOExportStorage(StorageSystem):
@@ -27,7 +28,7 @@ class SurveyCTOExportStorage(StorageSystem):
     ID_FIELD = "KEY"                            # unique submission ID field
     ATTACHMENTS_SUBDIR = "media"                # name of attachments subdirectory, if present
 
-    def __init__(self, export_file: str, attachments_available: bool):
+    def __init__(self, export_file: str, attachments_available: bool, data_timezone: datetime.timezone = None):
         """
         Initialize SurveyCTO export data.
 
@@ -35,11 +36,14 @@ class SurveyCTOExportStorage(StorageSystem):
         :type export_file: str
         :param attachments_available: True if attachments available from SurveyCTO Desktop (in media subfolder)
         :type attachments_available: bool
+        :param data_timezone: Timezone for timestamps in the data (defaults to current timezone if not specified)
+        :type data_timezone: datetime.timezone
         """
 
-        # save export file and attachment availability
+        # save export file, attachment availability, and data timezone
         self.export_file = export_file
         self.attachments_available = attachments_available
+        self.data_timezone = data_timezone
 
         # load export file into memory
         file = open(export_file, 'rt', encoding="utf-8")
@@ -68,6 +72,28 @@ class SurveyCTOExportStorage(StorageSystem):
         :type metadata_id: str
         :return: Metadata string from storage, or empty string if no such metadata exists
         :rtype: str
+        """
+        raise NotImplementedError
+
+    def store_metadata_binary(self, metadata_id: str, metadata: bytes):
+        """
+        Store metadata bytes in storage.
+
+        :param metadata_id: Unique metadata ID (should begin and end with __ and not conflict with any submission ID)
+        :type metadata_id: str
+        :param metadata: Metadata bytes to store
+        :type metadata: bytes
+        """
+        raise NotImplementedError
+
+    def get_metadata_binary(self, metadata_id: str) -> bytes:
+        """
+        Get metadata bytes from storage.
+
+        :param metadata_id: Unique metadata ID (should not conflict with any submission ID)
+        :type metadata_id: str
+        :return: Metadata bytes from storage, or empty bytes array if no such metadata exists
+        :rtype: bytes
         """
         raise NotImplementedError
 
@@ -256,3 +282,23 @@ class SurveyCTOExportStorage(StorageSystem):
         else:
             # construct attachment path from export file path and attachment location
             return os.path.join(os.path.split(self.export_file)[0], attachment_location)
+
+    def set_data_timezone(self, tz: datetime.timezone):
+        """
+        Set the timezone for timestamps in the data.
+
+        :param tz: Timezone for timestamps in the data
+        :type tz: datetime.timezone
+        """
+
+        self.data_timezone = tz
+
+    def get_data_timezone(self) -> datetime.timezone:
+        """
+        Get the timezone for timestamps in the data.
+
+        :return: Timezone for timestamps in the data (defaults to datetime.timezone.utc if unknown)
+        :rtype: datetime.timezone
+        """
+
+        return self.data_timezone if self.data_timezone is not None else datetime.datetime.now().astimezone().tzinfo
