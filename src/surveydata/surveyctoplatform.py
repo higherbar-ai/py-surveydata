@@ -231,6 +231,24 @@ class SurveyCTOPlatform(SurveyPlatform):
         else:
             raise ValueError("Pass either location_string or location_strings to load one or more text audits.")
 
+        # before returning, optimize column data types
+        if df is not None:
+            # parse device_time column, if present
+            dt_col = "device_time"
+            if dt_col in df.columns.values:
+                # count our non-NaN, non-empty-string values
+                nvals = df.loc[df[dt_col] != "", dt_col].count()
+
+                if nvals > 0:
+                    # try converting to datetime
+                    converted = pd.to_datetime(df[dt_col], errors="coerce")
+                    # if we didn't lose any data in the process, go with the converted version
+                    if converted.count() == nvals:
+                        df[dt_col] = converted
+
+            # convert data types based on object types
+            df = df.convert_dtypes()
+
         return df
 
     @staticmethod
