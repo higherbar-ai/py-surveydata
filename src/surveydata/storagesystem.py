@@ -150,7 +150,7 @@ class StorageSystem(object):
 
             if nvals > 0:
                 # try converting to datetime
-                converted = pd.to_datetime(submissions_df[col], infer_datetime_format=True, errors="coerce")
+                converted = pd.to_datetime(submissions_df[col], errors="coerce")
                 # if we didn't lose any data in the process, go with the converted version
                 if converted.count() == nvals:
                     submissions_df[col] = converted
