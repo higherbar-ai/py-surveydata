@@ -80,7 +80,7 @@ class FileStorage(StorageSystem):
 
         metadata_path = os.path.join(self.submission_path, quote_plus(metadata_id, safe=""))
         if os.path.isfile(metadata_path):
-            with open(metadata_path, "rt", encoding="utf-8") as metadata_file:
+            with open(metadata_path, "rt", encoding="utf-8-sig") as metadata_file:
                 return metadata_file.read()
 
         # if we didn't find the metadata, return an empty string
@@ -182,7 +182,7 @@ class FileStorage(StorageSystem):
         file_path = os.path.join(self.submission_path, self.submission_file_name(submission_id))
         if os.path.isfile(file_path):
             # since we have the file, return parsed JSON
-            with open(file_path, "rt", encoding="utf-8") as submission_file:
+            with open(file_path, "rt", encoding="utf-8-sig") as submission_file:
                 return json.loads(submission_file.read())
         else:
             # since we don't have the submission, return an empty dictionary
