@@ -46,7 +46,7 @@ class SurveyCTOExportStorage(StorageSystem):
         self.data_timezone = data_timezone
 
         # load export file into memory
-        file = open(export_file, 'rt', encoding="utf-8")
+        file = open(export_file, 'rt', encoding="utf-8-sig")
         reader = csv.DictReader(file)
         self.submissions = list(reader)
 
