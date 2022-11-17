@@ -14,8 +14,8 @@
 
 """Support for SurveyCTO as a survey data platform."""
 
-from surveydata.surveyplatform import SurveyPlatform
-from surveydata.storagesystem import StorageSystem
+from surveydata import SurveyPlatform
+from surveydata import StorageSystem
 import requests
 from urllib.parse import quote
 import datetime

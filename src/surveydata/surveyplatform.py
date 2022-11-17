@@ -14,7 +14,7 @@
 
 """Core interface (informal) for survey data platforms."""
 
-from surveydata.storagesystem import StorageSystem
+from surveydata import StorageSystem
 import pandas as pd
 
 

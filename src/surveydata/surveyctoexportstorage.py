@@ -14,7 +14,7 @@
 
 """Read-only support for SurveyCTO survey data exports."""
 
-from surveydata.storagesystem import StorageSystem
+from surveydata import StorageSystem
 import csv
 import os
 from typing import BinaryIO
