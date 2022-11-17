@@ -12,6 +12,14 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+from .storagesystem import StorageSystem
+from .filestorage import FileStorage
+from .s3storage import S3Storage
+from .dynamodbstorage import DynamoDBStorage
+from .surveyctoexportstorage import SurveyCTOExportStorage
+from .surveyplatform import SurveyPlatform
+from .surveyctoplatform import SurveyCTOPlatform
+
 # report our current version, as installed
 from importlib_metadata import version
 try:

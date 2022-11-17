@@ -14,7 +14,7 @@
 
 """Support for AWS S3 survey data storage."""
 
-from surveydata.storagesystem import StorageSystem
+from surveydata import StorageSystem
 import boto3
 import botocore.exceptions
 from urllib.parse import quote_plus, unquote_plus

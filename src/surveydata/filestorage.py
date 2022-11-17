@@ -14,7 +14,7 @@
 
 """Support for local file system survey data storage."""
 
-from surveydata.storagesystem import StorageSystem
+from surveydata import StorageSystem
 from urllib.parse import quote_plus, unquote_plus
 import json
 import os

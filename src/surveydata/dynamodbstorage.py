@@ -14,7 +14,7 @@
 
 """Support for AWS DynamoDB survey data storage."""
 
-from surveydata.storagesystem import StorageSystem
+from surveydata import StorageSystem
 import boto3
 from boto3.dynamodb import conditions
 from typing import BinaryIO
