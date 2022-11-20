@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>surveydata.surveyctoplatform module &mdash; surveydata 0.1.7 documentation</title>
+  <title>surveydata.surveyctoplatform module &mdash; surveydata 0.1.8 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -152,6 +152,58 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="surveydata.surveyctoplatform.SurveyCTOPlatform.process_text_audits">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">process_text_audits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ta_df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_times</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Series</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_times</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Series</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_tz</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">timezone</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collection_tz</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">timezone</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#surveydata.surveyctoplatform.SurveyCTOPlatform.process_text_audits" title="Permalink to this definition"></a></dt>
+<dd><p>Process text audits by summarizing, transforming, and reshaping into a single row per submission.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ta_df</strong> (<em>pd.DataFrame</em>) – DataFrame with raw text audit data, typically from get_text_audit_df()</p></li>
+<li><p><strong>start_times</strong> (<em>pd.Series</em>) – Pandas Series with a starting date and time for each submission (indexed by submission ID)</p></li>
+<li><p><strong>end_times</strong> (<em>pd.Series</em>) – Pandas Series with an ending date and time for each submission (indexed by submission ID)</p></li>
+<li><p><strong>data_tz</strong> (<em>datetime.timezone</em>) – Timezone of timestamps in start_times and end_times</p></li>
+<li><p><strong>collection_tz</strong> (<em>datetime.timezone</em>) – Timezone of data collection</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Pandas DataFrame, indexed by submission ID, with summary details as well as field-by-field visit
+summaries</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+<p>The returned DataFrame is indexed by submission ID and includes the following columns:</p>
+<ul class="simple">
+<li><p><strong>ta_duration_total</strong> - Total duration spent in form fields (ms); feature engineering recommendation: divide
+by max to rescale to 0-1</p></li>
+<li><p><strong>ta_duration_mean</strong> - Mean duration spent in form fields (ms); feature engineering recommendation: divide by
+max to rescale to 0-1</p></li>
+<li><p><strong>ta_duration_sd</strong> - Standard deviation of duration spent in form fields (ms); feature engineering
+recommendation: divide by max to rescale to 0-1</p></li>
+<li><p><strong>ta_duration_max</strong> - Max duration spent in form fields (ms); feature engineering recommendation: divide by
+max to rescale to 0-1</p></li>
+<li><p><strong>ta_fields</strong> - Number of fields visited; feature engineering recommendation: divide by max to rescale to 0-1</p></li>
+<li><p><strong>ta_time_in_fields</strong> - Percent of overall calendar time spent in fields; feature engineering recommendation:
+leave as 0-1 scale</p></li>
+<li><p><strong>ta_sessions</strong> - Number of form-filling sessions (always 1 unless eventlog-level text audit data); feature
+engineering recommendation: divide by max to rescale to 0-1</p></li>
+<li><p><strong>ta_pct_revisits</strong> - Percent of field visits that are revisits (always 0 unless eventlog-level text audit
+data); feature engineering recommendation: leave as 0-1 scale</p></li>
+<li><p><strong>ta_start_dayofweek</strong> - Day of week submission started (0 for Sunday, only available if eventlog text audit
+data or timezone information supplied); feature engineering recommendation: one-hot encode</p></li>
+<li><p><strong>ta_start_hourofday</strong> - Hour of day submission started (only available if eventlog text audit data or
+timezone information supplied); feature engineering recommendation: one-hot encode</p></li>
+<li><p><strong>ta_field_x_visited</strong> - 1 if field x visited, otherwise 0; feature engineering recommendation: leave as 0-1
+scale, fill missing with 0</p></li>
+<li><p><strong>ta_field_x_visit_y_start</strong> - When field x was visited the yth time divided by the highest field start time,
+otherwise 0; feature engineering recommendation: leave as 0-1 scale, fill missing with 0</p></li>
+<li><p><strong>ta_field_x_visit_y_duration</strong> - Time spent on field x the yth time it was visited divided by the highest
+field duration, otherwise 0; feature engineering recommendation: leave as 0-1 scale, fill missing with 0</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="surveydata.surveyctoplatform.SurveyCTOPlatform.sync_data">
 <span class="sig-name descname"><span class="pre">sync_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">storage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem" title="surveydata.storagesystem.StorageSystem"><span class="pre">StorageSystem</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachment_storage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem" title="surveydata.storagesystem.StorageSystem"><span class="pre">StorageSystem</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_attachments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">review_statuses</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#surveydata.surveyctoplatform.SurveyCTOPlatform.sync_data" title="Permalink to this definition"></a></dt>
 <dd><p>Sync survey data to storage system.</p>
@@ -172,6 +224,20 @@ if not specified, syncs only approved submissions)</p></li>
 <dd class="field-odd"><p>list</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.surveyctoplatform.SurveyCTOPlatform.update_submissions">
+<span class="sig-name descname"><span class="pre">update_submissions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submission_updates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surveydata.surveyctoplatform.SurveyCTOPlatform.update_submissions" title="Permalink to this definition"></a></dt>
+<dd><p>Submit one or more submission updates, including reviews, classifications, and/or comments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>submission_updates</strong> (<em>list</em>) – List of dictionaries with one per update; each should include values for
+“submissionID”; “reviewStatus” (“none”, “approved”, or “rejected”); “qualityClassification” (“good”,
+“okay”, “poor”, or “fake”); and/or “comment” (custom text)</p>
+</dd>
+</dl>
+<p>Warning: this method uses an undocumented SurveyCTO API that may break in future SurveyCTO releases.</p>
 </dd></dl>
 
 </dd></dl>
