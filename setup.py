@@ -19,7 +19,7 @@ with open('README.rst') as file:
 
 setup(
     name='surveydata',
-    version='0.1.8',
+    version='0.1.9',
     packages=['surveydata'],
     package_dir={'': 'src'},
     url='https://github.com/orangechairlabs/py-surveydata',

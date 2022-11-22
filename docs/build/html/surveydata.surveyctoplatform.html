@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>surveydata.surveyctoplatform module &mdash; surveydata 0.1.8 documentation</title>
+  <title>surveydata.surveyctoplatform module &mdash; surveydata 0.1.9 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -185,7 +185,7 @@ recommendation: divide by max to rescale to 0-1</p></li>
 max to rescale to 0-1</p></li>
 <li><p><strong>ta_fields</strong> - Number of fields visited; feature engineering recommendation: divide by max to rescale to 0-1</p></li>
 <li><p><strong>ta_time_in_fields</strong> - Percent of overall calendar time spent in fields; feature engineering recommendation:
-leave as 0-1 scale</p></li>
+leave as 0-1 scale (but note that rounding errors and device clock issues can result in values outside (0, 1))</p></li>
 <li><p><strong>ta_sessions</strong> - Number of form-filling sessions (always 1 unless eventlog-level text audit data); feature
 engineering recommendation: divide by max to rescale to 0-1</p></li>
 <li><p><strong>ta_pct_revisits</strong> - Percent of field visits that are revisits (always 0 unless eventlog-level text audit
