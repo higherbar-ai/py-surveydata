@@ -415,7 +415,7 @@ class SurveyCTOPlatform(SurveyPlatform):
           max to rescale to 0-1
         * **ta_fields** - Number of fields visited; feature engineering recommendation: divide by max to rescale to 0-1
         * **ta_time_in_fields** - Percent of overall calendar time spent in fields; feature engineering recommendation:
-          leave as 0-1 scale
+          leave as 0-1 scale (but note that rounding errors and device clock issues can result in values outside (0, 1))
         * **ta_sessions** - Number of form-filling sessions (always 1 unless eventlog-level text audit data); feature
           engineering recommendation: divide by max to rescale to 0-1
         * **ta_pct_revisits** - Percent of field visits that are revisits (always 0 unless eventlog-level text audit
@@ -480,7 +480,7 @@ class SurveyCTOPlatform(SurveyPlatform):
                        "ta_duration_max": sub_ta_df[duration_field].max() * 1000 if not eventlog
                        else sub_ta_df[duration_field].max(),
                        "ta_time_in_fields": np.NaN if start_time is None
-                       else (duration_ms / 1000) / (end_time - start_time).seconds,
+                       else (duration_ms / 1000) / (end_time - start_time).total_seconds(),
                        "ta_fields": sub_ta_df["field"].nunique(),
                        "ta_sessions": 1 if not eventlog else 1 + len(sub_ta_df[sub_ta_df["event"] == "Reopen form"]),
                        "ta_pct_revisits": 0 if not eventlog else 1 - (sub_ta_df["field"].nunique() /
