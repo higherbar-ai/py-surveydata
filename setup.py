@@ -19,8 +19,10 @@ with open('README.rst') as file:
 
 setup(
     name='surveydata',
-    version='0.1.9',
+    version='0.1.10',
     packages=['surveydata'],
+    python_requires='>=3.8',
+    install_requires=['boto3', 'requests', 'pandas', 'numpy>=1.22'],
     package_dir={'': 'src'},
     url='https://github.com/orangechairlabs/py-surveydata',
     project_urls={'Documentation': 'https://surveydata.readthedocs.io/'},

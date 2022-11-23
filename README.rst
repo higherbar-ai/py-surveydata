@@ -72,8 +72,6 @@ For convenience, the repo includes ``.idea`` project files for PyCharm.
 
 To rebuild the documentation:
 
-#. For the first time:
-    a. ``pip install sphinx sphinx-rtd-theme``
 #. Update version number in ``/docs/source/conf.py``
 #. Update layout or options as needed in ``/docs/source/index.rst``
 #. In a terminal window, from the project directory:
@@ -83,8 +81,6 @@ To rebuild the documentation:
 
 To rebuild the distribution packages:
 
-#. For the first time:
-    a. ``pip install setuptools twine``
 #. For the PyPI package:
     a. Update version number (and any build options) in ``/setup.py``
     b. Confirm credentials and settings in ``~/.pypirc``
