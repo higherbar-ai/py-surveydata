@@ -92,4 +92,4 @@ To rebuild the distribution packages:
     a. Commit everything to GitHub and merge to ``main`` branch
     b. Add new release, linking to new tag like ``v#.#.#`` in main branch
 #. For readthedocs.io:
-    a. Go to https://readthedocs.org/projects/surveydata/, log in, and click to rebuild from GitHub
+    a. Go to https://readthedocs.org/projects/surveydata/, log in, and click to rebuild from GitHub (only if it doesn't automatically trigger)
