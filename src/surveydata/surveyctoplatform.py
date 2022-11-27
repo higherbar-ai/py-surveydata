@@ -411,7 +411,9 @@ class SurveyCTOPlatform(SurveyPlatform):
           max to rescale to 0-1
         * **ta_duration_sd** - Standard deviation of duration spent in form fields (ms); feature engineering
           recommendation: divide by max to rescale to 0-1
-        * **ta_duration_max** - Max duration spent in form fields (ms); feature engineering recommendation: divide by
+        * **ta_duration_min** - Min duration spent in form field (ms); feature engineering recommendation: divide by
+          max to rescale to 0-1
+        * **ta_duration_max** - Max duration spent in form field (ms); feature engineering recommendation: divide by
           max to rescale to 0-1
         * **ta_fields** - Number of fields visited; feature engineering recommendation: divide by max to rescale to 0-1
         * **ta_time_in_fields** - Percent of overall calendar time spent in fields; feature engineering recommendation:
@@ -426,10 +428,12 @@ class SurveyCTOPlatform(SurveyPlatform):
           timezone information supplied); feature engineering recommendation: one-hot encode
         * **ta_field_x_visited** - 1 if field x visited, otherwise 0; feature engineering recommendation: leave as 0-1
           scale, fill missing with 0
-        * **ta_field_x_visit_y_start** - When field x was visited the yth time divided by the highest field start time,
+        * **ta_field_x_visit_y_start** - When field x was visited the yth time divided by *ta_total_duration*,
           otherwise 0; feature engineering recommendation: leave as 0-1 scale, fill missing with 0
-        * **ta_field_x_visit_y_duration** - Time spent on field x the yth time it was visited divided by the highest
-          field duration, otherwise 0; feature engineering recommendation: leave as 0-1 scale, fill missing with 0
+        * **ta_field_x_visit_y_duration** - Time spent on field x the yth time it was visited  divided by
+          *ta_total_duration*, otherwise 0 (i.e., percentage of overall form time spent on the field visit); feature
+          engineering recommendation: leave as 0-1 scale, fill missing with 0 (or divide by max to rescale to full 0-1
+          range)
         """
 
         # start list of dictionaries, one for each submission
@@ -477,6 +481,8 @@ class SurveyCTOPlatform(SurveyPlatform):
                        else sub_ta_df[duration_field].mean(),
                        "ta_duration_sd": sub_ta_df[duration_field].std() * 1000 if not eventlog
                        else sub_ta_df[duration_field].std(),
+                       "ta_duration_min": sub_ta_df[duration_field].min() * 1000 if not eventlog
+                       else sub_ta_df[duration_field].min(),
                        "ta_duration_max": sub_ta_df[duration_field].max() * 1000 if not eventlog
                        else sub_ta_df[duration_field].max(),
                        "ta_time_in_fields": np.NaN if start_time is None
@@ -493,6 +499,7 @@ class SurveyCTOPlatform(SurveyPlatform):
             if pd.isna(summary["ta_duration_mean"]):
                 summary["ta_duration_mean"] = 0.0
                 summary["ta_duration_sd"] = 0.0
+                summary["ta_duration_min"] = 0.0
                 summary["ta_duration_max"] = 0.0
 
             for field in sub_ta_df["field"].dropna().unique():
@@ -508,14 +515,14 @@ class SurveyCTOPlatform(SurveyPlatform):
                     row = field_df.iloc[index]
                     if eventlog:
                         summary[f"ta_field_{df_fieldname}_visit_{index + 1}_start"] = \
-                            row["form_time_ms"] / sub_ta_df["form_time_ms"].max()
+                            row["form_time_ms"] / duration_ms
                         summary[f"ta_field_{df_fieldname}_visit_{index + 1}_duration"] = \
-                            row[duration_field] / summary["ta_duration_max"]
+                            row[duration_field] / duration_ms
                     else:
                         summary[f"ta_field_{df_fieldname}_visit_{index + 1}_start"] = \
-                            row["visited_s"] / sub_ta_df["visited_s"].max()
+                            (row["visited_s"] * 1000) / duration_ms
                         summary[f"ta_field_{df_fieldname}_visit_{index + 1}_duration"] = \
-                            (row[duration_field] * 1000) / summary["ta_duration_max"]
+                            (row[duration_field] * 1000) / duration_ms
 
             # add the current submission to the list of summaries
             summaries += [summary]

@@ -19,7 +19,7 @@ with open('README.rst') as file:
 
 setup(
     name='surveydata',
-    version='0.1.10',
+    version='0.1.11',
     packages=['surveydata'],
     python_requires='>=3.7',
     install_requires=['boto3', 'requests', 'pandas', 'numpy'],

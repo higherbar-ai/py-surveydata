@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>surveydata.surveyctoplatform module &mdash; surveydata 0.1.10 documentation</title>
+  <title>surveydata.surveyctoplatform module &mdash; surveydata 0.1.11 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -181,7 +181,9 @@ by max to rescale to 0-1</p></li>
 max to rescale to 0-1</p></li>
 <li><p><strong>ta_duration_sd</strong> - Standard deviation of duration spent in form fields (ms); feature engineering
 recommendation: divide by max to rescale to 0-1</p></li>
-<li><p><strong>ta_duration_max</strong> - Max duration spent in form fields (ms); feature engineering recommendation: divide by
+<li><p><strong>ta_duration_min</strong> - Min duration spent in form field (ms); feature engineering recommendation: divide by
+max to rescale to 0-1</p></li>
+<li><p><strong>ta_duration_max</strong> - Max duration spent in form field (ms); feature engineering recommendation: divide by
 max to rescale to 0-1</p></li>
 <li><p><strong>ta_fields</strong> - Number of fields visited; feature engineering recommendation: divide by max to rescale to 0-1</p></li>
 <li><p><strong>ta_time_in_fields</strong> - Percent of overall calendar time spent in fields; feature engineering recommendation:
@@ -196,10 +198,12 @@ data or timezone information supplied); feature engineering recommendation: one-
 timezone information supplied); feature engineering recommendation: one-hot encode</p></li>
 <li><p><strong>ta_field_x_visited</strong> - 1 if field x visited, otherwise 0; feature engineering recommendation: leave as 0-1
 scale, fill missing with 0</p></li>
-<li><p><strong>ta_field_x_visit_y_start</strong> - When field x was visited the yth time divided by the highest field start time,
+<li><p><strong>ta_field_x_visit_y_start</strong> - When field x was visited the yth time divided by <em>ta_total_duration</em>,
 otherwise 0; feature engineering recommendation: leave as 0-1 scale, fill missing with 0</p></li>
-<li><p><strong>ta_field_x_visit_y_duration</strong> - Time spent on field x the yth time it was visited divided by the highest
-field duration, otherwise 0; feature engineering recommendation: leave as 0-1 scale, fill missing with 0</p></li>
+<li><p><strong>ta_field_x_visit_y_duration</strong> - Time spent on field x the yth time it was visited  divided by
+<em>ta_total_duration</em>, otherwise 0 (i.e., percentage of overall form time spent on the field visit); feature
+engineering recommendation: leave as 0-1 scale, fill missing with 0 (or divide by max to rescale to full 0-1
+range)</p></li>
 </ul>
 </dd></dl>
 
