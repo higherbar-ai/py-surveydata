@@ -20,6 +20,8 @@ appropriate ``SurveyPlatform`` object:
 
 * ``SurveyCTOPlatform`` provides support for `SurveyCTO <https://www.surveycto.com>`_ data,
   including methods to process `text audits <https://docs.surveycto.com/02-designing-forms/01-core-concepts/03zd.field-types-text-audit.html>`_ and submit submission updates via the `review and correction workflow <https://docs.surveycto.com/04-monitoring-and-management/01-the-basics/04.reviewing-and-correcting.html>`_
+  (in support of SurveyCTO's `machine learning roadmap <https://www.surveycto.com/blog/machine-learning-for-quality-control/>`_,
+  with `the ml4qc project <https://github.com/orangechairlabs/ml4qc>`_)
 * *Support for more survey platforms is coming!* Reach out if you have a particular need or
   are willing to contribute.
 
