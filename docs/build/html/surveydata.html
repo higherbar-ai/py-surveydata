@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>surveydata package &mdash; surveydata 0.1.11 documentation</title>
+  <title>surveydata package &mdash; surveydata 0.1.12 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -20,7 +20,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="surveydata.dynamodbstorage module" href="surveydata.dynamodbstorage.html" />
+    <link rel="next" title="surveydata.azureblobstorage module" href="surveydata.azureblobstorage.html" />
     <link rel="prev" title="surveydata" href="modules.html" /> 
 </head>
 
@@ -44,8 +44,10 @@
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">surveydata</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">surveydata package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="surveydata.azureblobstorage.html">surveydata.azureblobstorage module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="surveydata.dynamodbstorage.html">surveydata.dynamodbstorage module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="surveydata.filestorage.html">surveydata.filestorage module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="surveydata.googlecloudstorage.html">surveydata.googlecloudstorage module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="surveydata.s3storage.html">surveydata.s3storage module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="surveydata.storagesystem.html">surveydata.storagesystem module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="surveydata.surveyctoexportstorage.html">surveydata.surveyctoexportstorage module</a></li>
@@ -91,12 +93,35 @@
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="surveydata.azureblobstorage.html">surveydata.azureblobstorage module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="surveydata.azureblobstorage.html#surveydata.azureblobstorage.AzureBlobStorage"><code class="docutils literal notranslate"><span class="pre">AzureBlobStorage</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.azureblobstorage.html#surveydata.azureblobstorage.AzureBlobStorage.__init__"><code class="docutils literal notranslate"><span class="pre">AzureBlobStorage.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.azureblobstorage.html#surveydata.azureblobstorage.AzureBlobStorage.attachment_object_name"><code class="docutils literal notranslate"><span class="pre">AzureBlobStorage.attachment_object_name()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.azureblobstorage.html#surveydata.azureblobstorage.AzureBlobStorage.attachments_supported"><code class="docutils literal notranslate"><span class="pre">AzureBlobStorage.attachments_supported()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.azureblobstorage.html#surveydata.azureblobstorage.AzureBlobStorage.get_attachment"><code class="docutils literal notranslate"><span class="pre">AzureBlobStorage.get_attachment()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.azureblobstorage.html#surveydata.azureblobstorage.AzureBlobStorage.get_metadata"><code class="docutils literal notranslate"><span class="pre">AzureBlobStorage.get_metadata()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.azureblobstorage.html#surveydata.azureblobstorage.AzureBlobStorage.get_metadata_binary"><code class="docutils literal notranslate"><span class="pre">AzureBlobStorage.get_metadata_binary()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.azureblobstorage.html#surveydata.azureblobstorage.AzureBlobStorage.get_submission"><code class="docutils literal notranslate"><span class="pre">AzureBlobStorage.get_submission()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.azureblobstorage.html#surveydata.azureblobstorage.AzureBlobStorage.list_attachments"><code class="docutils literal notranslate"><span class="pre">AzureBlobStorage.list_attachments()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.azureblobstorage.html#surveydata.azureblobstorage.AzureBlobStorage.list_submissions"><code class="docutils literal notranslate"><span class="pre">AzureBlobStorage.list_submissions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.azureblobstorage.html#surveydata.azureblobstorage.AzureBlobStorage.query_attachment"><code class="docutils literal notranslate"><span class="pre">AzureBlobStorage.query_attachment()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.azureblobstorage.html#surveydata.azureblobstorage.AzureBlobStorage.query_submission"><code class="docutils literal notranslate"><span class="pre">AzureBlobStorage.query_submission()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.azureblobstorage.html#surveydata.azureblobstorage.AzureBlobStorage.store_attachment"><code class="docutils literal notranslate"><span class="pre">AzureBlobStorage.store_attachment()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.azureblobstorage.html#surveydata.azureblobstorage.AzureBlobStorage.store_metadata"><code class="docutils literal notranslate"><span class="pre">AzureBlobStorage.store_metadata()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.azureblobstorage.html#surveydata.azureblobstorage.AzureBlobStorage.store_metadata_binary"><code class="docutils literal notranslate"><span class="pre">AzureBlobStorage.store_metadata_binary()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.azureblobstorage.html#surveydata.azureblobstorage.AzureBlobStorage.store_submission"><code class="docutils literal notranslate"><span class="pre">AzureBlobStorage.store_submission()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.azureblobstorage.html#surveydata.azureblobstorage.AzureBlobStorage.submission_id"><code class="docutils literal notranslate"><span class="pre">AzureBlobStorage.submission_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.azureblobstorage.html#surveydata.azureblobstorage.AzureBlobStorage.submission_id_and_attachment_name"><code class="docutils literal notranslate"><span class="pre">AzureBlobStorage.submission_id_and_attachment_name()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.azureblobstorage.html#surveydata.azureblobstorage.AzureBlobStorage.submission_object_name"><code class="docutils literal notranslate"><span class="pre">AzureBlobStorage.submission_object_name()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="surveydata.dynamodbstorage.html">surveydata.dynamodbstorage module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="surveydata.dynamodbstorage.html#surveydata.dynamodbstorage.DynamoDBStorage"><code class="docutils literal notranslate"><span class="pre">DynamoDBStorage</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.dynamodbstorage.html#surveydata.dynamodbstorage.DynamoDBStorage.__init__"><code class="docutils literal notranslate"><span class="pre">DynamoDBStorage.__init__()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.dynamodbstorage.html#surveydata.dynamodbstorage.DynamoDBStorage.attachments_supported"><code class="docutils literal notranslate"><span class="pre">DynamoDBStorage.attachments_supported()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.dynamodbstorage.html#surveydata.dynamodbstorage.DynamoDBStorage.get_attachment"><code class="docutils literal notranslate"><span class="pre">DynamoDBStorage.get_attachment()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="surveydata.dynamodbstorage.html#surveydata.dynamodbstorage.DynamoDBStorage.get_data_timezone"><code class="docutils literal notranslate"><span class="pre">DynamoDBStorage.get_data_timezone()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.dynamodbstorage.html#surveydata.dynamodbstorage.DynamoDBStorage.get_metadata"><code class="docutils literal notranslate"><span class="pre">DynamoDBStorage.get_metadata()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.dynamodbstorage.html#surveydata.dynamodbstorage.DynamoDBStorage.get_metadata_binary"><code class="docutils literal notranslate"><span class="pre">DynamoDBStorage.get_metadata_binary()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.dynamodbstorage.html#surveydata.dynamodbstorage.DynamoDBStorage.get_submission"><code class="docutils literal notranslate"><span class="pre">DynamoDBStorage.get_submission()</span></code></a></li>
@@ -104,7 +129,6 @@
 <li class="toctree-l3"><a class="reference internal" href="surveydata.dynamodbstorage.html#surveydata.dynamodbstorage.DynamoDBStorage.list_submissions"><code class="docutils literal notranslate"><span class="pre">DynamoDBStorage.list_submissions()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.dynamodbstorage.html#surveydata.dynamodbstorage.DynamoDBStorage.query_attachment"><code class="docutils literal notranslate"><span class="pre">DynamoDBStorage.query_attachment()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.dynamodbstorage.html#surveydata.dynamodbstorage.DynamoDBStorage.query_submission"><code class="docutils literal notranslate"><span class="pre">DynamoDBStorage.query_submission()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="surveydata.dynamodbstorage.html#surveydata.dynamodbstorage.DynamoDBStorage.set_data_timezone"><code class="docutils literal notranslate"><span class="pre">DynamoDBStorage.set_data_timezone()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.dynamodbstorage.html#surveydata.dynamodbstorage.DynamoDBStorage.store_attachment"><code class="docutils literal notranslate"><span class="pre">DynamoDBStorage.store_attachment()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.dynamodbstorage.html#surveydata.dynamodbstorage.DynamoDBStorage.store_metadata"><code class="docutils literal notranslate"><span class="pre">DynamoDBStorage.store_metadata()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.dynamodbstorage.html#surveydata.dynamodbstorage.DynamoDBStorage.store_metadata_binary"><code class="docutils literal notranslate"><span class="pre">DynamoDBStorage.store_metadata_binary()</span></code></a></li>
@@ -120,7 +144,6 @@
 <li class="toctree-l3"><a class="reference internal" href="surveydata.filestorage.html#surveydata.filestorage.FileStorage.attachment_path"><code class="docutils literal notranslate"><span class="pre">FileStorage.attachment_path()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.filestorage.html#surveydata.filestorage.FileStorage.attachments_supported"><code class="docutils literal notranslate"><span class="pre">FileStorage.attachments_supported()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.filestorage.html#surveydata.filestorage.FileStorage.get_attachment"><code class="docutils literal notranslate"><span class="pre">FileStorage.get_attachment()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="surveydata.filestorage.html#surveydata.filestorage.FileStorage.get_data_timezone"><code class="docutils literal notranslate"><span class="pre">FileStorage.get_data_timezone()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.filestorage.html#surveydata.filestorage.FileStorage.get_metadata"><code class="docutils literal notranslate"><span class="pre">FileStorage.get_metadata()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.filestorage.html#surveydata.filestorage.FileStorage.get_metadata_binary"><code class="docutils literal notranslate"><span class="pre">FileStorage.get_metadata_binary()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.filestorage.html#surveydata.filestorage.FileStorage.get_submission"><code class="docutils literal notranslate"><span class="pre">FileStorage.get_submission()</span></code></a></li>
@@ -128,7 +151,6 @@
 <li class="toctree-l3"><a class="reference internal" href="surveydata.filestorage.html#surveydata.filestorage.FileStorage.list_submissions"><code class="docutils literal notranslate"><span class="pre">FileStorage.list_submissions()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.filestorage.html#surveydata.filestorage.FileStorage.query_attachment"><code class="docutils literal notranslate"><span class="pre">FileStorage.query_attachment()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.filestorage.html#surveydata.filestorage.FileStorage.query_submission"><code class="docutils literal notranslate"><span class="pre">FileStorage.query_submission()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="surveydata.filestorage.html#surveydata.filestorage.FileStorage.set_data_timezone"><code class="docutils literal notranslate"><span class="pre">FileStorage.set_data_timezone()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.filestorage.html#surveydata.filestorage.FileStorage.store_attachment"><code class="docutils literal notranslate"><span class="pre">FileStorage.store_attachment()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.filestorage.html#surveydata.filestorage.FileStorage.store_metadata"><code class="docutils literal notranslate"><span class="pre">FileStorage.store_metadata()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.filestorage.html#surveydata.filestorage.FileStorage.store_metadata_binary"><code class="docutils literal notranslate"><span class="pre">FileStorage.store_metadata_binary()</span></code></a></li>
@@ -139,13 +161,36 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="surveydata.googlecloudstorage.html">surveydata.googlecloudstorage module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="surveydata.googlecloudstorage.html#surveydata.googlecloudstorage.GoogleCloudStorage"><code class="docutils literal notranslate"><span class="pre">GoogleCloudStorage</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.googlecloudstorage.html#surveydata.googlecloudstorage.GoogleCloudStorage.__init__"><code class="docutils literal notranslate"><span class="pre">GoogleCloudStorage.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.googlecloudstorage.html#surveydata.googlecloudstorage.GoogleCloudStorage.attachment_object_name"><code class="docutils literal notranslate"><span class="pre">GoogleCloudStorage.attachment_object_name()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.googlecloudstorage.html#surveydata.googlecloudstorage.GoogleCloudStorage.attachments_supported"><code class="docutils literal notranslate"><span class="pre">GoogleCloudStorage.attachments_supported()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.googlecloudstorage.html#surveydata.googlecloudstorage.GoogleCloudStorage.get_attachment"><code class="docutils literal notranslate"><span class="pre">GoogleCloudStorage.get_attachment()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.googlecloudstorage.html#surveydata.googlecloudstorage.GoogleCloudStorage.get_metadata"><code class="docutils literal notranslate"><span class="pre">GoogleCloudStorage.get_metadata()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.googlecloudstorage.html#surveydata.googlecloudstorage.GoogleCloudStorage.get_metadata_binary"><code class="docutils literal notranslate"><span class="pre">GoogleCloudStorage.get_metadata_binary()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.googlecloudstorage.html#surveydata.googlecloudstorage.GoogleCloudStorage.get_submission"><code class="docutils literal notranslate"><span class="pre">GoogleCloudStorage.get_submission()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.googlecloudstorage.html#surveydata.googlecloudstorage.GoogleCloudStorage.list_attachments"><code class="docutils literal notranslate"><span class="pre">GoogleCloudStorage.list_attachments()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.googlecloudstorage.html#surveydata.googlecloudstorage.GoogleCloudStorage.list_submissions"><code class="docutils literal notranslate"><span class="pre">GoogleCloudStorage.list_submissions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.googlecloudstorage.html#surveydata.googlecloudstorage.GoogleCloudStorage.query_attachment"><code class="docutils literal notranslate"><span class="pre">GoogleCloudStorage.query_attachment()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.googlecloudstorage.html#surveydata.googlecloudstorage.GoogleCloudStorage.query_submission"><code class="docutils literal notranslate"><span class="pre">GoogleCloudStorage.query_submission()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.googlecloudstorage.html#surveydata.googlecloudstorage.GoogleCloudStorage.store_attachment"><code class="docutils literal notranslate"><span class="pre">GoogleCloudStorage.store_attachment()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.googlecloudstorage.html#surveydata.googlecloudstorage.GoogleCloudStorage.store_metadata"><code class="docutils literal notranslate"><span class="pre">GoogleCloudStorage.store_metadata()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.googlecloudstorage.html#surveydata.googlecloudstorage.GoogleCloudStorage.store_metadata_binary"><code class="docutils literal notranslate"><span class="pre">GoogleCloudStorage.store_metadata_binary()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.googlecloudstorage.html#surveydata.googlecloudstorage.GoogleCloudStorage.store_submission"><code class="docutils literal notranslate"><span class="pre">GoogleCloudStorage.store_submission()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.googlecloudstorage.html#surveydata.googlecloudstorage.GoogleCloudStorage.submission_id"><code class="docutils literal notranslate"><span class="pre">GoogleCloudStorage.submission_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.googlecloudstorage.html#surveydata.googlecloudstorage.GoogleCloudStorage.submission_id_and_attachment_name"><code class="docutils literal notranslate"><span class="pre">GoogleCloudStorage.submission_id_and_attachment_name()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.googlecloudstorage.html#surveydata.googlecloudstorage.GoogleCloudStorage.submission_object_name"><code class="docutils literal notranslate"><span class="pre">GoogleCloudStorage.submission_object_name()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="surveydata.s3storage.html">surveydata.s3storage module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="surveydata.s3storage.html#surveydata.s3storage.S3Storage"><code class="docutils literal notranslate"><span class="pre">S3Storage</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.s3storage.html#surveydata.s3storage.S3Storage.__init__"><code class="docutils literal notranslate"><span class="pre">S3Storage.__init__()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.s3storage.html#surveydata.s3storage.S3Storage.attachment_object_name"><code class="docutils literal notranslate"><span class="pre">S3Storage.attachment_object_name()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.s3storage.html#surveydata.s3storage.S3Storage.attachments_supported"><code class="docutils literal notranslate"><span class="pre">S3Storage.attachments_supported()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.s3storage.html#surveydata.s3storage.S3Storage.get_attachment"><code class="docutils literal notranslate"><span class="pre">S3Storage.get_attachment()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="surveydata.s3storage.html#surveydata.s3storage.S3Storage.get_data_timezone"><code class="docutils literal notranslate"><span class="pre">S3Storage.get_data_timezone()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.s3storage.html#surveydata.s3storage.S3Storage.get_metadata"><code class="docutils literal notranslate"><span class="pre">S3Storage.get_metadata()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.s3storage.html#surveydata.s3storage.S3Storage.get_metadata_binary"><code class="docutils literal notranslate"><span class="pre">S3Storage.get_metadata_binary()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.s3storage.html#surveydata.s3storage.S3Storage.get_submission"><code class="docutils literal notranslate"><span class="pre">S3Storage.get_submission()</span></code></a></li>
@@ -153,7 +198,6 @@
 <li class="toctree-l3"><a class="reference internal" href="surveydata.s3storage.html#surveydata.s3storage.S3Storage.list_submissions"><code class="docutils literal notranslate"><span class="pre">S3Storage.list_submissions()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.s3storage.html#surveydata.s3storage.S3Storage.query_attachment"><code class="docutils literal notranslate"><span class="pre">S3Storage.query_attachment()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.s3storage.html#surveydata.s3storage.S3Storage.query_submission"><code class="docutils literal notranslate"><span class="pre">S3Storage.query_submission()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="surveydata.s3storage.html#surveydata.s3storage.S3Storage.set_data_timezone"><code class="docutils literal notranslate"><span class="pre">S3Storage.set_data_timezone()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.s3storage.html#surveydata.s3storage.S3Storage.store_attachment"><code class="docutils literal notranslate"><span class="pre">S3Storage.store_attachment()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.s3storage.html#surveydata.s3storage.S3Storage.store_metadata"><code class="docutils literal notranslate"><span class="pre">S3Storage.store_metadata()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.s3storage.html#surveydata.s3storage.S3Storage.store_metadata_binary"><code class="docutils literal notranslate"><span class="pre">S3Storage.store_metadata_binary()</span></code></a></li>
@@ -171,6 +215,8 @@
 <li class="toctree-l3"><a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem.attachments_supported"><code class="docutils literal notranslate"><span class="pre">StorageSystem.attachments_supported()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem.get_attachment"><code class="docutils literal notranslate"><span class="pre">StorageSystem.get_attachment()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem.get_data_timezone"><code class="docutils literal notranslate"><span class="pre">StorageSystem.get_data_timezone()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem.get_dataframe"><code class="docutils literal notranslate"><span class="pre">StorageSystem.get_dataframe()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem.get_dataframe_csv"><code class="docutils literal notranslate"><span class="pre">StorageSystem.get_dataframe_csv()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem.get_metadata"><code class="docutils literal notranslate"><span class="pre">StorageSystem.get_metadata()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem.get_metadata_binary"><code class="docutils literal notranslate"><span class="pre">StorageSystem.get_metadata_binary()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem.get_submission"><code class="docutils literal notranslate"><span class="pre">StorageSystem.get_submission()</span></code></a></li>
@@ -182,6 +228,8 @@
 <li class="toctree-l3"><a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem.query_submission"><code class="docutils literal notranslate"><span class="pre">StorageSystem.query_submission()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem.set_data_timezone"><code class="docutils literal notranslate"><span class="pre">StorageSystem.set_data_timezone()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem.store_attachment"><code class="docutils literal notranslate"><span class="pre">StorageSystem.store_attachment()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem.store_dataframe"><code class="docutils literal notranslate"><span class="pre">StorageSystem.store_dataframe()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem.store_dataframe_csv"><code class="docutils literal notranslate"><span class="pre">StorageSystem.store_dataframe_csv()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem.store_metadata"><code class="docutils literal notranslate"><span class="pre">StorageSystem.store_metadata()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem.store_metadata_binary"><code class="docutils literal notranslate"><span class="pre">StorageSystem.store_metadata_binary()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem.store_submission"><code class="docutils literal notranslate"><span class="pre">StorageSystem.store_submission()</span></code></a></li>
@@ -246,7 +294,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="modules.html" class="btn btn-neutral float-left" title="surveydata" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="surveydata.dynamodbstorage.html" class="btn btn-neutral float-right" title="surveydata.dynamodbstorage module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="surveydata.azureblobstorage.html" class="btn btn-neutral float-right" title="surveydata.azureblobstorage module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

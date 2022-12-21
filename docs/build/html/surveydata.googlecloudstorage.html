@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>surveydata.googlecloudstorage module &mdash; surveydata 0.1.12 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="surveydata.s3storage module" href="surveydata.s3storage.html" />
+    <link rel="prev" title="surveydata.filestorage module" href="surveydata.filestorage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> surveydata
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">surveydata</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="surveydata.html">surveydata package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="surveydata.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="surveydata.azureblobstorage.html">surveydata.azureblobstorage module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="surveydata.dynamodbstorage.html">surveydata.dynamodbstorage module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="surveydata.filestorage.html">surveydata.filestorage module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">surveydata.googlecloudstorage module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="surveydata.s3storage.html">surveydata.s3storage module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="surveydata.storagesystem.html">surveydata.storagesystem module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="surveydata.surveyctoexportstorage.html">surveydata.surveyctoexportstorage module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="surveydata.surveyctoplatform.html">surveydata.surveyctoplatform module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="surveydata.surveyplatform.html">surveydata.surveyplatform module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.html#module-surveydata">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">surveydata</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">surveydata</a></li>
+          <li class="breadcrumb-item"><a href="surveydata.html">surveydata package</a></li>
+      <li class="breadcrumb-item active">surveydata.googlecloudstorage module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/surveydata.googlecloudstorage.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-surveydata.googlecloudstorage">
+<span id="surveydata-googlecloudstorage-module"></span><h1>surveydata.googlecloudstorage module<a class="headerlink" href="#module-surveydata.googlecloudstorage" title="Permalink to this heading"></a></h1>
+<p>Support for Google Cloud Storage survey data storage.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="surveydata.googlecloudstorage.GoogleCloudStorage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surveydata.googlecloudstorage.</span></span><span class="sig-name descname"><span class="pre">GoogleCloudStorage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bucket_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blob_name_prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">credentials</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Credentials</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surveydata.googlecloudstorage.GoogleCloudStorage" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem" title="surveydata.storagesystem.StorageSystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">StorageSystem</span></code></a></p>
+<p>Google Cloud Storage survey data storage implementation.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.googlecloudstorage.GoogleCloudStorage.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bucket_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blob_name_prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">credentials</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Credentials</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surveydata.googlecloudstorage.GoogleCloudStorage.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize Google Cloud Storage for survey data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project_id</strong> (<em>str</em>) – Google Cloud Storage project ID</p></li>
+<li><p><strong>bucket_name</strong> (<em>str</em>) – Cloud Storage bucket name (must already exist)</p></li>
+<li><p><strong>blob_name_prefix</strong> (<em>str</em>) – Prefix to use for all blob names (e.g., “Surveys/Form123/”)</p></li>
+<li><p><strong>credentials</strong> (<em>credentials.Credentials</em>) – Explicit service account credentials to use (e.g., loaded from
+service_account.Credentials.from_service_account_file())</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.googlecloudstorage.GoogleCloudStorage.attachment_object_name">
+<span class="sig-name descname"><span class="pre">attachment_object_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submission_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachment_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#surveydata.googlecloudstorage.GoogleCloudStorage.attachment_object_name" title="Permalink to this definition"></a></dt>
+<dd><p>Get attachment object name for specific attachment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>submission_id</strong> (<em>str</em>) – Unique submission ID</p></li>
+<li><p><strong>attachment_name</strong> (<em>str</em>) – Attachment filename</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Object name for submission</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.googlecloudstorage.GoogleCloudStorage.attachments_supported">
+<span class="sig-name descname"><span class="pre">attachments_supported</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#surveydata.googlecloudstorage.GoogleCloudStorage.attachments_supported" title="Permalink to this definition"></a></dt>
+<dd><p>Query whether storage system supports attachments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if attachments supported, otherwise False</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.googlecloudstorage.GoogleCloudStorage.get_attachment">
+<span class="sig-name descname"><span class="pre">get_attachment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attachment_location</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submission_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachment_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">BinaryIO</span></span></span><a class="headerlink" href="#surveydata.googlecloudstorage.GoogleCloudStorage.get_attachment" title="Permalink to this definition"></a></dt>
+<dd><p>Get submission attachment from storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attachment_location</strong> (<em>str</em>) – Attachment location string (as returned when attachment stored)</p></li>
+<li><p><strong>submission_id</strong> (<em>str</em>) – Unique submission ID (in lieu of attachment_location)</p></li>
+<li><p><strong>attachment_name</strong> (<em>str</em>) – Attachment filename (in lieu of attachment_location)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Attachment as file-like object (though, note: it doesn’t support seeking)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>BinaryIO</p>
+</dd>
+</dl>
+<p>Must pass either attachment_location or both submission_id and attachment_name.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.googlecloudstorage.GoogleCloudStorage.get_metadata">
+<span class="sig-name descname"><span class="pre">get_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#surveydata.googlecloudstorage.GoogleCloudStorage.get_metadata" title="Permalink to this definition"></a></dt>
+<dd><p>Get metadata string from storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>metadata_id</strong> (<em>str</em>) – Unique metadata ID (should begin and end with __ and not conflict with any submission ID)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Metadata string from storage, or empty string if no such metadata exists</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.googlecloudstorage.GoogleCloudStorage.get_metadata_binary">
+<span class="sig-name descname"><span class="pre">get_metadata_binary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="headerlink" href="#surveydata.googlecloudstorage.GoogleCloudStorage.get_metadata_binary" title="Permalink to this definition"></a></dt>
+<dd><p>Get metadata bytes from storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>metadata_id</strong> (<em>str</em>) – Unique metadata ID (should not conflict with any submission ID)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Metadata bytes from storage, or empty bytes array if no such metadata exists</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bytes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.googlecloudstorage.GoogleCloudStorage.get_submission">
+<span class="sig-name descname"><span class="pre">get_submission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submission_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#surveydata.googlecloudstorage.GoogleCloudStorage.get_submission" title="Permalink to this definition"></a></dt>
+<dd><p>Get submission data from storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>submission_id</strong> (<em>str</em>) – Unique submission ID</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Submission data (or empty dictionary if submission not found)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.googlecloudstorage.GoogleCloudStorage.list_attachments">
+<span class="sig-name descname"><span class="pre">list_attachments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submission_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#surveydata.googlecloudstorage.GoogleCloudStorage.list_attachments" title="Permalink to this definition"></a></dt>
+<dd><p>List all attachments currently in storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>submission_id</strong> (<em>str</em>) – Optional submission ID, to list only attachments for specific submission</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of attachments, each as dict with name, submission_id, and location_string</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.googlecloudstorage.GoogleCloudStorage.list_submissions">
+<span class="sig-name descname"><span class="pre">list_submissions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#surveydata.googlecloudstorage.GoogleCloudStorage.list_submissions" title="Permalink to this definition"></a></dt>
+<dd><p>List all submissions currently in storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of submission IDs</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.googlecloudstorage.GoogleCloudStorage.query_attachment">
+<span class="sig-name descname"><span class="pre">query_attachment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attachment_location</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submission_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachment_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#surveydata.googlecloudstorage.GoogleCloudStorage.query_attachment" title="Permalink to this definition"></a></dt>
+<dd><p>Query whether specific submission attachment exists in storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attachment_location</strong> (<em>str</em>) – Attachment location string (as returned when attachment stored)</p></li>
+<li><p><strong>submission_id</strong> (<em>str</em>) – Unique submission ID (in lieu of attachment_location)</p></li>
+<li><p><strong>attachment_name</strong> (<em>str</em>) – Attachment filename (in lieu of attachment_location)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if submission exists in storage; otherwise False</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+<p>Must pass either attachment_location or both submission_id and attachment_name.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.googlecloudstorage.GoogleCloudStorage.query_submission">
+<span class="sig-name descname"><span class="pre">query_submission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submission_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#surveydata.googlecloudstorage.GoogleCloudStorage.query_submission" title="Permalink to this definition"></a></dt>
+<dd><p>Query whether specific submission exists in storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>submission_id</strong> (<em>str</em>) – Unique submission ID</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if submission exists in storage; otherwise False</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.googlecloudstorage.GoogleCloudStorage.store_attachment">
+<span class="sig-name descname"><span class="pre">store_attachment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submission_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachment_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachment_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BinaryIO</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#surveydata.googlecloudstorage.GoogleCloudStorage.store_attachment" title="Permalink to this definition"></a></dt>
+<dd><p>Store submission attachment in storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>submission_id</strong> (<em>str</em>) – Unique submission ID</p></li>
+<li><p><strong>attachment_name</strong> (<em>str</em>) – Attachment filename</p></li>
+<li><p><strong>attachment_data</strong> (<em>BinaryIO</em>) – File-type object containing the attachment data</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Location string for stored attachment</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.googlecloudstorage.GoogleCloudStorage.store_metadata">
+<span class="sig-name descname"><span class="pre">store_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surveydata.googlecloudstorage.GoogleCloudStorage.store_metadata" title="Permalink to this definition"></a></dt>
+<dd><p>Store metadata string in storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>metadata_id</strong> (<em>str</em>) – Unique metadata ID (should begin and end with __ and not conflict with any submission ID)</p></li>
+<li><p><strong>metadata</strong> (<em>str</em>) – Metadata string to store</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.googlecloudstorage.GoogleCloudStorage.store_metadata_binary">
+<span class="sig-name descname"><span class="pre">store_metadata_binary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surveydata.googlecloudstorage.GoogleCloudStorage.store_metadata_binary" title="Permalink to this definition"></a></dt>
+<dd><p>Store metadata bytes in storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>metadata_id</strong> (<em>str</em>) – Unique metadata ID (should begin and end with __ and not conflict with any submission ID)</p></li>
+<li><p><strong>metadata</strong> (<em>bytes</em>) – Metadata bytes to store</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.googlecloudstorage.GoogleCloudStorage.store_submission">
+<span class="sig-name descname"><span class="pre">store_submission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submission_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submission_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surveydata.googlecloudstorage.GoogleCloudStorage.store_submission" title="Permalink to this definition"></a></dt>
+<dd><p>Store submission data in storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>submission_id</strong> (<em>str</em>) – Unique submission ID</p></li>
+<li><p><strong>submission_data</strong> (<em>dict</em>) – Submission data to store</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.googlecloudstorage.GoogleCloudStorage.submission_id">
+<span class="sig-name descname"><span class="pre">submission_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#surveydata.googlecloudstorage.GoogleCloudStorage.submission_id" title="Permalink to this definition"></a></dt>
+<dd><p>Get submission ID from object name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>object_name</strong> (<em>str</em>) – Object name (e.g., from submission_object_name())</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Submission ID</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.googlecloudstorage.GoogleCloudStorage.submission_id_and_attachment_name">
+<span class="sig-name descname"><span class="pre">submission_id_and_attachment_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_name:</span> <span class="pre">str)</span> <span class="pre">-&gt;</span> <span class="pre">(&lt;class</span> <span class="pre">'str'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">&lt;class</span> <span class="pre">'str'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surveydata.googlecloudstorage.GoogleCloudStorage.submission_id_and_attachment_name" title="Permalink to this definition"></a></dt>
+<dd><p>Get submission ID and attachment name from object name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>object_name</strong> (<em>str</em>) – Object name (e.g., from submission_object_name())</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Submission ID and attachment name</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(str, str)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.googlecloudstorage.GoogleCloudStorage.submission_object_name">
+<span class="sig-name descname"><span class="pre">submission_object_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submission_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#surveydata.googlecloudstorage.GoogleCloudStorage.submission_object_name" title="Permalink to this definition"></a></dt>
+<dd><p>Get submission object name for specific submission.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>submission_id</strong> (<em>str</em>) – Unique submission ID</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Object name for submission</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="surveydata.filestorage.html" class="btn btn-neutral float-left" title="surveydata.filestorage module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="surveydata.s3storage.html" class="btn btn-neutral float-right" title="surveydata.s3storage module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Orange Chair Labs LLC.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

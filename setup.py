@@ -19,10 +19,11 @@ with open('README.rst') as file:
 
 setup(
     name='surveydata',
-    version='0.1.11',
+    version='0.1.12',
     packages=['surveydata'],
     python_requires='>=3.7',
-    install_requires=['requests', 'pandas', 'numpy', 'boto3', 'google-cloud-storage'],
+    install_requires=['requests', 'pandas', 'numpy', 'boto3', 'google-cloud-storage', 'azure-storage-blob',
+                      'azure-identity'],
     package_dir={'': 'src'},
     url='https://github.com/orangechairlabs/py-surveydata',
     project_urls={'Documentation': 'https://surveydata.readthedocs.io/'},

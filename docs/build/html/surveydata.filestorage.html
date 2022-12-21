@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>surveydata.filestorage module &mdash; surveydata 0.1.11 documentation</title>
+  <title>surveydata.filestorage module &mdash; surveydata 0.1.12 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -20,7 +20,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="surveydata.s3storage module" href="surveydata.s3storage.html" />
+    <link rel="next" title="surveydata.googlecloudstorage module" href="surveydata.googlecloudstorage.html" />
     <link rel="prev" title="surveydata.dynamodbstorage module" href="surveydata.dynamodbstorage.html" /> 
 </head>
 
@@ -44,8 +44,10 @@
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">surveydata</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="surveydata.html">surveydata package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="surveydata.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="surveydata.azureblobstorage.html">surveydata.azureblobstorage module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="surveydata.dynamodbstorage.html">surveydata.dynamodbstorage module</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">surveydata.filestorage module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="surveydata.googlecloudstorage.html">surveydata.googlecloudstorage module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="surveydata.s3storage.html">surveydata.s3storage module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="surveydata.storagesystem.html">surveydata.storagesystem module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="surveydata.surveyctoexportstorage.html">surveydata.surveyctoexportstorage module</a></li>
@@ -159,20 +161,6 @@
 </dd>
 </dl>
 <p>Must pass either attachment_location or both submission_id and attachment_name.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="surveydata.filestorage.FileStorage.get_data_timezone">
-<span class="sig-name descname"><span class="pre">get_data_timezone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">timezone</span></span></span><a class="headerlink" href="#surveydata.filestorage.FileStorage.get_data_timezone" title="Permalink to this definition"></a></dt>
-<dd><p>Get the timezone for timestamps in the data.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Timezone for timestamps in the data (defaults to datetime.timezone.utc if unknown)</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>datetime.timezone</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -297,17 +285,6 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="surveydata.filestorage.FileStorage.set_data_timezone">
-<span class="sig-name descname"><span class="pre">set_data_timezone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tz</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">timezone</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surveydata.filestorage.FileStorage.set_data_timezone" title="Permalink to this definition"></a></dt>
-<dd><p>Set the timezone for timestamps in the data.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>tz</strong> (<em>datetime.timezone</em>) – Timezone for timestamps in the data</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="surveydata.filestorage.FileStorage.store_attachment">
 <span class="sig-name descname"><span class="pre">store_attachment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">submission_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachment_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachment_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BinaryIO</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#surveydata.filestorage.FileStorage.store_attachment" title="Permalink to this definition"></a></dt>
 <dd><p>Store submission attachment in storage.</p>
@@ -413,7 +390,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="surveydata.dynamodbstorage.html" class="btn btn-neutral float-left" title="surveydata.dynamodbstorage module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="surveydata.s3storage.html" class="btn btn-neutral float-right" title="surveydata.s3storage module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="surveydata.googlecloudstorage.html" class="btn btn-neutral float-right" title="surveydata.googlecloudstorage module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
