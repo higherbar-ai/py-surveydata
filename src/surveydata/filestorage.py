@@ -20,8 +20,6 @@ import json
 import os
 import shutil
 from typing import BinaryIO
-import datetime
-import pickle
 
 
 class FileStorage(StorageSystem):
@@ -374,27 +372,3 @@ class FileStorage(StorageSystem):
 
             # extract path from location string
             return attachment_location[len(self.ATTACHMENT_LOCATION_PREFIX):]
-
-    def set_data_timezone(self, tz: datetime.timezone):
-        """
-        Set the timezone for timestamps in the data.
-
-        :param tz: Timezone for timestamps in the data
-        :type tz: datetime.timezone
-        """
-
-        self.store_metadata_binary(self.DATA_TZ_METADATA_ID, pickle.dumps(tz))
-
-    def get_data_timezone(self) -> datetime.timezone:
-        """
-        Get the timezone for timestamps in the data.
-
-        :return: Timezone for timestamps in the data (defaults to datetime.timezone.utc if unknown)
-        :rtype: datetime.timezone
-        """
-
-        # fetch metadata if possible
-        tz_metadata = self.get_metadata_binary(self.DATA_TZ_METADATA_ID)
-
-        # return stored timezone or UTC if unknown
-        return pickle.loads(tz_metadata) if len(tz_metadata) > 0 else datetime.timezone.utc

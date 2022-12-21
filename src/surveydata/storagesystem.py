@@ -16,6 +16,8 @@
 from typing import BinaryIO
 import pandas as pd
 import datetime
+import pickle
+from io import StringIO
 
 
 class StorageSystem(object):
@@ -250,7 +252,8 @@ class StorageSystem(object):
         :param tz: Timezone for timestamps in the data
         :type tz: datetime.timezone
         """
-        raise NotImplementedError
+
+        self.store_metadata_binary(self.DATA_TZ_METADATA_ID, pickle.dumps(tz))
 
     def get_data_timezone(self) -> datetime.timezone:
         """
@@ -259,4 +262,61 @@ class StorageSystem(object):
         :return: Timezone for timestamps in the data (defaults to datetime.timezone.utc if unknown)
         :rtype: datetime.timezone
         """
-        raise NotImplementedError
+
+        # fetch metadata if possible
+        tz_metadata = self.get_metadata_binary(self.DATA_TZ_METADATA_ID)
+
+        # return stored timezone or UTC if unknown
+        return pickle.loads(tz_metadata) if len(tz_metadata) > 0 else datetime.timezone.utc
+
+    def store_dataframe(self, metadata_id: str, df: pd.DataFrame):
+        """
+        Store Pandas DataFrame as binary file in storage.
+
+        :param metadata_id: Unique metadata ID to save as (should begin and end with __ and not conflict with any
+            submission ID)
+        :type metadata_id: str
+        :param df: Pandas DataFrame to store as binary file
+        :type df: pd.DataFrame
+        """
+
+        self.store_metadata_binary(metadata_id=metadata_id, metadata=pickle.dumps(df))
+
+    def get_dataframe(self, metadata_id: str) -> pd.DataFrame:
+        """
+        Get Pandas DataFrame from a binary file in storage.
+
+        :param metadata_id: Unique metadata ID (should begin and end with __ and not conflict with any
+            submission ID)
+        :type metadata_id: str
+        :return: Metadata string from storage, or empty string if no such metadata exists
+        :rtype: pd.DataFrame
+        """
+
+        return pickle.loads(self.get_metadata_binary(metadata_id))
+
+    def store_dataframe_csv(self, metadata_id: str, df: pd.DataFrame):
+        """
+        Store Pandas DataFrame as .csv file in storage.
+
+        :param metadata_id: Unique metadata ID to save as (should begin and end with __ and not conflict with any
+            submission ID)
+        :type metadata_id: str
+        :param df: Pandas DataFrame to store as .csv file
+        :type df: pd.DataFrame
+        """
+
+        self.store_metadata(metadata_id=metadata_id, metadata=df.to_csv())
+
+    def get_dataframe_csv(self, metadata_id: str) -> pd.DataFrame:
+        """
+        Get Pandas DataFrame from a .csv file in storage.
+
+        :param metadata_id: Unique metadata ID (should begin and end with __ and not conflict with any
+            submission ID)
+        :type metadata_id: str
+        :return: Metadata string from storage, or empty string if no such metadata exists
+        :rtype: pd.DataFrame
+        """
+
+        return pd.read_csv(StringIO(self.get_metadata(metadata_id=metadata_id)))

@@ -18,8 +18,6 @@ from surveydata import StorageSystem
 import boto3
 from boto3.dynamodb import conditions
 from typing import BinaryIO
-import datetime
-import pickle
 
 
 class DynamoDBStorage(StorageSystem):
@@ -352,27 +350,3 @@ class DynamoDBStorage(StorageSystem):
             return {self.partition_key_name: self.partition_key_value, self.id_field_name: submission_id}
         else:
             return {self.id_field_name: submission_id}
-
-    def set_data_timezone(self, tz: datetime.timezone):
-        """
-        Set the timezone for timestamps in the data.
-
-        :param tz: Timezone for timestamps in the data
-        :type tz: datetime.timezone
-        """
-
-        self.store_metadata_binary(self.DATA_TZ_METADATA_ID, pickle.dumps(tz))
-
-    def get_data_timezone(self) -> datetime.timezone:
-        """
-        Get the timezone for timestamps in the data.
-
-        :return: Timezone for timestamps in the data (defaults to datetime.timezone.utc if unknown)
-        :rtype: datetime.timezone
-        """
-
-        # fetch metadata if possible
-        tz_metadata = self.get_metadata_binary(self.DATA_TZ_METADATA_ID)
-
-        # return stored timezone or UTC if unknown
-        return pickle.loads(tz_metadata) if len(tz_metadata) > 0 else datetime.timezone.utc

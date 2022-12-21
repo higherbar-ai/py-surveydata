@@ -15,6 +15,7 @@
 from .storagesystem import StorageSystem
 from .filestorage import FileStorage
 from .s3storage import S3Storage
+from .googlecloudstorage import GoogleCloudStorage
 from .dynamodbstorage import DynamoDBStorage
 from .surveyctoexportstorage import SurveyCTOExportStorage
 from .surveyplatform import SurveyPlatform
