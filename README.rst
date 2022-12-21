@@ -32,22 +32,19 @@ All survey data must be stored somewhere, and storage is handled via an appropri
 * ``S3Storage`` provides support for `AWS S3 <https://aws.amazon.com/s3/>`_ storage
 * ``DynamoDBStorage`` provides support for `AWS DynamoDB <https://aws.amazon.com/dynamodb/>`_ storage
 * ``GoogleCloudStorage`` provides support for `Google Cloud Storage <https://cloud.google.com/storage>`_
+* ``AzureBlobStorage`` provides support for `Azure Blob Storage <https://azure.microsoft.com/en-us/products/storage/blobs/>`_
 * ``SurveyCTOExportStorage`` provides support for local exports from `SurveyCTO Desktop <https://docs.surveycto.com/05-exporting-and-publishing-data/02-exporting-data-with-surveycto-desktop/01.using-desktop.html>`_
-* *Support for more storage systems is coming!* Reach out if you have a particular need or
-  are willing to contribute.
 
 In general, the workflow goes like this:
 
 #. Initialize the survey platform
 #. Initialize one or more storage systems
 #. Synchronize data between the survey platform and the storage system(s) to ensure that
-   data in storage is fully up-to-date
+   data in storage is fully up-to-date (except for static export storage, via a class like ``SurveyCTOExportStorage``,
+   which doesn't support synchronization)
 #. Load data and/or attachments via the survey platform and storage API's
 #. Optionally: Save processed data and then, later, load it back again, for cases where ingestion and processing tasks
-   are separated from actual analysis or use.
-
-(When using a static data export for storage, via a class like ``SurveyCTOExportStorage``,
-the *synchronize* step is skipped, but otherwise everything is the same.)
+   are separated from actual analysis or use
 
 Examples
 --------

@@ -12,53 +12,53 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-"""Support for Google Cloud Storage survey data storage."""
+"""Support for Azure Blob Storage survey data storage."""
 
 from surveydata import StorageSystem
-from google.oauth2 import service_account
-from google.cloud import storage
+from azure.identity import DefaultAzureCredential
+from azure.storage.blob import BlobServiceClient
 from urllib.parse import quote_plus, unquote_plus
 import json
 from typing import BinaryIO
 
 
-class GoogleCloudStorage(StorageSystem):
-    """Google Cloud Storage survey data storage implementation."""
+class AzureBlobStorage(StorageSystem):
+    """Azure Blob Storage survey data storage implementation."""
 
     # define constants
     SUBMISSION_KEY_SUFFIX = ".json"                     # suffix for submission keys
-    ATTACHMENT_LOCATION_PREFIX = "gs:"                  # prefix for attachment location strings
-    ATTACHMENT_CHUNK_SIZE = 262144                      # chunk size for streaming attachments
+    ATTACHMENT_LOCATION_PREFIX = "abs:"                 # prefix for attachment location strings
 
-    def __init__(self, project_id: str, bucket_name: str, blob_name_prefix: str,
-                 credentials: service_account.Credentials = None):
+    def __init__(self, container_name: str, blob_name_prefix: str, connection_string: str = None,
+                 account_url: str = None):
         """
-        Initialize Google Cloud Storage for survey data.
+        Initialize Azure Blob Storage for survey data.
 
-        :param project_id: Google Cloud Storage project ID
-        :type project_id: str
-        :param bucket_name: Cloud Storage bucket name (must already exist)
-        :type bucket_name: str
+        :param container_name: Azure Storage container name (must already exist)
+        :type container_name: str
         :param blob_name_prefix: Prefix to use for all blob names (e.g., "Surveys/Form123/")
         :type blob_name_prefix: str
-        :param credentials: Explicit service account credentials to use (e.g., loaded from
-            service_account.Credentials.from_service_account_file())
-        :type credentials: credentials.Credentials
+        :param connection_string: If connecting via connection string, the connection string to use
+        :type connection_string: str
+        :param account_url: If connecting via manual (prior) authentication, account URL to use, like
+            https://<storageaccountname>.blob.core.windows.net
+        :type account_url: str
         """
 
         # start a client session
-        if credentials is None:
-            # assume environment has project and credential details
-            self.client = storage.Client(project=project_id)
+        if connection_string is None:
+            if account_url is None:
+                raise ValueError("Must supply either connection_string or account_url for authenticating to Azure "
+                                 "Blob Storage.")
+            self.client = BlobServiceClient(account_url, credential=DefaultAzureCredential())
         else:
-            self.client = storage.Client(project=project_id, credentials=credentials)
+            self.client = BlobServiceClient.from_connection_string(connection_string)
 
-        # go ahead and create the bucket object
-        self.bucket = self.client.bucket(bucket_name)
+        # go ahead and create the container client
+        self.container_client = self.client.get_container_client(container_name)
 
-        # save our project ID, bucket name, and blob name prefix
-        self.project_id = project_id
-        self.bucket_name = bucket_name
+        # save our container name and blob name prefix
+        self.container_name = container_name
         self.blob_name_prefix = blob_name_prefix
 
         # call base class constructor as well
@@ -105,8 +105,9 @@ class GoogleCloudStorage(StorageSystem):
             raise ValueError(f"Metadata IDs must begin and end with __. {metadata_id} doesn't qualify.")
 
         # store metadata
-        blob = self.bucket.blob(self.blob_name_prefix + quote_plus(metadata_id, safe=""))
-        blob.upload_from_string(metadata)
+        blob_client = self.client.get_blob_client(container=self.container_name,
+                                                  blob=self.blob_name_prefix + quote_plus(metadata_id, safe=""))
+        blob_client.upload_blob(metadata, overwrite=True)
 
     def get_metadata_binary(self, metadata_id: str) -> bytes:
         """
@@ -119,12 +120,13 @@ class GoogleCloudStorage(StorageSystem):
         """
 
         # try to fetch the metadata, returning an empty bytes array if it's not found
-        blob = self.bucket.blob(self.blob_name_prefix + quote_plus(metadata_id, safe=""))
-        if blob is None or not blob.exists():
+        blob_client = self.client.get_blob_client(container=self.container_name,
+                                                  blob=self.blob_name_prefix + quote_plus(metadata_id, safe=""))
+        if blob_client is None or not blob_client.exists():
             return bytes()
 
         # return the metadata as bytes
-        return blob.download_as_bytes(raw_download=True)
+        return blob_client.download_blob().readall()
 
     def list_submissions(self) -> list:
         """
@@ -134,11 +136,14 @@ class GoogleCloudStorage(StorageSystem):
         :rtype: list
         """
 
+        # in order not to be fooled by JSON submission attachments, count our number of expected /'s
+        slashes_expected = self.blob_name_prefix.count("/")
+
         # spin through all .json files in the appropriate folder, to assemble our list of submissions
         submissions = []
-        for blob in self.client.list_blobs(self.bucket_name, prefix=self.blob_name_prefix, delimiter="/"):
-            # see if it's a .json file
-            if blob.name.endswith(self.SUBMISSION_KEY_SUFFIX):
+        for blob in self.container_client.list_blobs(name_starts_with=self.blob_name_prefix):
+            # see if it's a .json file in the root folder
+            if blob.name.endswith(self.SUBMISSION_KEY_SUFFIX) and blob.name.count("/") == slashes_expected:
                 # if so, strip, decode, and add to list
                 submissions += [self.submission_id(blob.name)]
 
@@ -155,8 +160,9 @@ class GoogleCloudStorage(StorageSystem):
         :rtype: bool
         """
 
-        blob = self.bucket.blob(self.submission_object_name(submission_id))
-        return blob is not None and blob.exists()
+        blob_client = self.client.get_blob_client(container=self.container_name,
+                                                  blob=self.submission_object_name(submission_id))
+        return blob_client is not None and blob_client.exists()
 
     def store_submission(self, submission_id: str, submission_data: dict):
         """
@@ -169,8 +175,9 @@ class GoogleCloudStorage(StorageSystem):
         """
 
         # store submission data as JSON file
-        blob = self.bucket.blob(self.submission_object_name(submission_id))
-        blob.upload_from_string(json.dumps(submission_data))
+        blob_client = self.client.get_blob_client(container=self.container_name,
+                                                  blob=self.submission_object_name(submission_id))
+        blob_client.upload_blob(json.dumps(submission_data), overwrite=True)
 
     def get_submission(self, submission_id: str) -> dict:
         """
@@ -183,12 +190,13 @@ class GoogleCloudStorage(StorageSystem):
         """
 
         # try to fetch the submission, returning an empty dictionary if it's not found
-        blob = self.bucket.blob(self.submission_object_name(submission_id))
-        if blob is None or not blob.exists():
+        blob_client = self.client.get_blob_client(container=self.container_name,
+                                                  blob=self.submission_object_name(submission_id))
+        if blob_client is None or not blob_client.exists():
             return {}
 
         # return data from JSON, parsed as dict
-        return json.loads(blob.download_as_bytes(raw_download=True).decode('utf-8'))
+        return json.loads(blob_client.download_blob().readall().decode('utf-8'))
 
     def attachments_supported(self) -> bool:
         """
@@ -221,7 +229,7 @@ class GoogleCloudStorage(StorageSystem):
 
         # spin through all blobs under the appropriate folder, to assemble our list of attachments
         attachments = []
-        for blob in self.client.list_blobs(self.bucket_name, prefix=prefix):
+        for blob in self.container_client.list_blobs(name_starts_with=prefix):
             # see if it's a file at the correct folder level
             if blob.name.count("/") == slashes_expected:
                 (subid, attname) = self.submission_id_and_attachment_name(blob.name)
@@ -253,8 +261,8 @@ class GoogleCloudStorage(StorageSystem):
                                                   attachment_name=attachment_name)
 
         # look for blob and return
-        blob = self.bucket.blob(attkey)
-        return blob is not None and blob.exists()
+        blob_client = self.client.get_blob_client(container=self.container_name, blob=attkey)
+        return blob_client is not None and blob_client.exists()
 
     def store_attachment(self, submission_id: str, attachment_name: str, attachment_data: BinaryIO) -> str:
         """
@@ -270,14 +278,9 @@ class GoogleCloudStorage(StorageSystem):
         :rtype: str
         """
 
-        # upload attachment and return location string (with a 256k chunk size for streaming)
         key = self.attachment_object_name(submission_id, attachment_name)
-        with self.bucket.blob(key, chunk_size=262144).open(mode='wb') as f:
-            while True:
-                batch = attachment_data.read(self.ATTACHMENT_CHUNK_SIZE)
-                if not batch:
-                    break
-                f.write(batch)
+        blob_client = self.client.get_blob_client(container=self.container_name, blob=key)
+        blob_client.upload_blob(attachment_data, overwrite=True)
         return self.ATTACHMENT_LOCATION_PREFIX + key
 
     def get_attachment(self, attachment_location: str = "", submission_id: str = "",
@@ -302,12 +305,13 @@ class GoogleCloudStorage(StorageSystem):
                                                   attachment_name=attachment_name)
 
         # try to fetch the attachment, raising exception if it's not found
-        blob = self.bucket.blob(attkey, chunk_size=self.ATTACHMENT_CHUNK_SIZE)
-        if blob is None or not blob.exists():
-            raise ValueError(f"Attachment '{attkey}' not found in Google Cloud Storage bucket '{self.bucket_name}'.")
+        blob_client = self.client.get_blob_client(container=self.container_name, blob=attkey)
+        if blob_client is None or not blob_client.exists():
+            raise ValueError(f"Attachment '{attkey}' not found in Azure Blob Storage container "
+                             f"'{self.container_name}'.")
 
         # return the attachment as a binary stream
-        return blob.open(mode="rb", raw_download=True)
+        return blob_client.download_blob()
 
     def submission_object_name(self, submission_id: str) -> str:
         """
@@ -393,7 +397,7 @@ class GoogleCloudStorage(StorageSystem):
         else:
             # confirm attachment location looks legit; if not, raise exception
             if not attachment_location.startswith(self.ATTACHMENT_LOCATION_PREFIX):
-                raise ValueError(f"Google Cloud Storage attachment locations must start with "
+                raise ValueError(f"Azure Blob Storage attachment locations must start with "
                                  f"{self.ATTACHMENT_LOCATION_PREFIX} prefix.")
 
             # extract object key from location string
