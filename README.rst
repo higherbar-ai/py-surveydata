@@ -30,7 +30,8 @@ All survey data must be stored somewhere, and storage is handled via an appropri
 
 * ``FileStorage`` provides support for local file storage
 * ``S3Storage`` provides support for `AWS S3 <https://aws.amazon.com/s3/>`_ storage
-* ``DynamoDBStorage`` provides support `AWS DynamoDB <https://aws.amazon.com/dynamodb/>`_ storage
+* ``DynamoDBStorage`` provides support for `AWS DynamoDB <https://aws.amazon.com/dynamodb/>`_ storage
+* ``GoogleCloudStorage`` provides support for `Google Cloud Storage <https://cloud.google.com/storage>`_
 * ``SurveyCTOExportStorage`` provides support for local exports from `SurveyCTO Desktop <https://docs.surveycto.com/05-exporting-and-publishing-data/02-exporting-data-with-surveycto-desktop/01.using-desktop.html>`_
 * *Support for more storage systems is coming!* Reach out if you have a particular need or
   are willing to contribute.
@@ -42,6 +43,8 @@ In general, the workflow goes like this:
 #. Synchronize data between the survey platform and the storage system(s) to ensure that
    data in storage is fully up-to-date
 #. Load data and/or attachments via the survey platform and storage API's
+#. Optionally: Save processed data and then, later, load it back again, for cases where ingestion and processing tasks
+   are separated from actual analysis or use.
 
 (When using a static data export for storage, via a class like ``SurveyCTOExportStorage``,
 the *synchronize* step is skipped, but otherwise everything is the same.)
@@ -86,7 +89,7 @@ To rebuild the distribution packages:
 #. For the PyPI package:
     a. Update version number (and any build options) in ``/setup.py``
     b. Confirm credentials and settings in ``~/.pypirc``
-    c. Run ``/setup.py`` for ``bdist_wheel`` and/or ``sdist`` build types (*Tools... Run setup.py task...* in PyCharm)
+    c. Run ``/setup.py`` for the ``bdist_wheel`` and ``sdist`` build types (*Tools... Run setup.py task...* in PyCharm)
     d. Delete old builds from ``/dist``
     e. In a terminal window:
         i. ``twine upload dist/* --verbose``

@@ -22,7 +22,7 @@ setup(
     version='0.1.11',
     packages=['surveydata'],
     python_requires='>=3.7',
-    install_requires=['boto3', 'requests', 'pandas', 'numpy'],
+    install_requires=['requests', 'pandas', 'numpy', 'boto3', 'google-cloud-storage'],
     package_dir={'': 'src'},
     url='https://github.com/orangechairlabs/py-surveydata',
     project_urls={'Documentation': 'https://surveydata.readthedocs.io/'},
