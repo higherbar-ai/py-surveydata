@@ -11,6 +11,8 @@ Submodules
    surveydata.dynamodbstorage
    surveydata.filestorage
    surveydata.googlecloudstorage
+   surveydata.odkexportstorage
+   surveydata.odkplatform
    surveydata.s3storage
    surveydata.storagesystem
    surveydata.surveyctoexportstorage

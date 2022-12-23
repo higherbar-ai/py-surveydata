@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>surveydata.odkplatform module &mdash; surveydata 0.1.13 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="surveydata.s3storage module" href="surveydata.s3storage.html" />
+    <link rel="prev" title="surveydata.odkexportstorage module" href="surveydata.odkexportstorage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> surveydata
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">surveydata</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="surveydata.html">surveydata package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="surveydata.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="surveydata.azureblobstorage.html">surveydata.azureblobstorage module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="surveydata.dynamodbstorage.html">surveydata.dynamodbstorage module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="surveydata.filestorage.html">surveydata.filestorage module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="surveydata.googlecloudstorage.html">surveydata.googlecloudstorage module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="surveydata.odkexportstorage.html">surveydata.odkexportstorage module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">surveydata.odkplatform module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="surveydata.s3storage.html">surveydata.s3storage module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="surveydata.storagesystem.html">surveydata.storagesystem module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="surveydata.surveyctoexportstorage.html">surveydata.surveyctoexportstorage module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="surveydata.surveyctoplatform.html">surveydata.surveyctoplatform module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="surveydata.surveyplatform.html">surveydata.surveyplatform module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.html#module-surveydata">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">surveydata</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">surveydata</a></li>
+          <li class="breadcrumb-item"><a href="surveydata.html">surveydata package</a></li>
+      <li class="breadcrumb-item active">surveydata.odkplatform module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/surveydata.odkplatform.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-surveydata.odkplatform">
+<span id="surveydata-odkplatform-module"></span><h1>surveydata.odkplatform module<a class="headerlink" href="#module-surveydata.odkplatform" title="Permalink to this heading"></a></h1>
+<p>Support for ODK Central as a survey data platform.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="surveydata.odkplatform.ODKPlatform">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">surveydata.odkplatform.</span></span><span class="sig-name descname"><span class="pre">ODKPlatform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">form_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surveydata.odkplatform.ODKPlatform" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="surveydata.surveyplatform.html#surveydata.surveyplatform.SurveyPlatform" title="surveydata.surveyplatform.SurveyPlatform"><code class="xref py py-class docutils literal notranslate"><span class="pre">SurveyPlatform</span></code></a></p>
+<p>ODK Central survey data platform implementation.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.odkplatform.ODKPlatform.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">form_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#surveydata.odkplatform.ODKPlatform.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize ODK for access to survey data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config_file</strong> (<em>str</em>) – Full path to ODK Central config file (needed to call sync_data())</p></li>
+<li><p><strong>project_id</strong> (<em>int</em>) – ODK project ID (if not supplied, will use default_project_id in config file)</p></li>
+<li><p><strong>form_id</strong> (<em>str</em>) – ODK form ID</p></li>
+</ul>
+</dd>
+</dl>
+<p>If you’re not going to call sync_data(), you don’t need to supply any of the parameters to this constructor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.odkplatform.ODKPlatform.get_submissions_df">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_submissions_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">storage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem" title="surveydata.storagesystem.StorageSystem"><span class="pre">StorageSystem</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#surveydata.odkplatform.ODKPlatform.get_submissions_df" title="Permalink to this definition"></a></dt>
+<dd><p>Get all submission data from storage, organized into a Pandas DataFrame and optimized based on the platform.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>storage</strong> (<a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem" title="surveydata.storagesystem.StorageSystem"><em>StorageSystem</em></a>) – Storage system for submissions</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Pandas DataFrame containing all submissions currently in storage</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="surveydata.odkplatform.ODKPlatform.sync_data">
+<span class="sig-name descname"><span class="pre">sync_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">storage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem" title="surveydata.storagesystem.StorageSystem"><span class="pre">StorageSystem</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachment_storage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem" title="surveydata.storagesystem.StorageSystem"><span class="pre">StorageSystem</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_attachments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_rejected</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#surveydata.odkplatform.ODKPlatform.sync_data" title="Permalink to this definition"></a></dt>
+<dd><p>Sync survey data to storage system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>storage</strong> (<a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem" title="surveydata.storagesystem.StorageSystem"><em>StorageSystem</em></a>) – Storage system for submissions (and attachments, if supported and other options don’t override)</p></li>
+<li><p><strong>attachment_storage</strong> (<a class="reference internal" href="surveydata.storagesystem.html#surveydata.storagesystem.StorageSystem" title="surveydata.storagesystem.StorageSystem"><em>StorageSystem</em></a>) – Separate storage system for attachments (only if needed)</p></li>
+<li><p><strong>no_attachments</strong> (<em>bool</em>) – True to not sync attachments</p></li>
+<li><p><strong>include_rejected</strong> (<em>bool</em>) – True to include rejected submissions</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of new submissions stored (submission ID strings)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="surveydata.odkexportstorage.html" class="btn btn-neutral float-left" title="surveydata.odkexportstorage module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="surveydata.s3storage.html" class="btn btn-neutral float-right" title="surveydata.s3storage module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Orange Chair Labs LLC.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

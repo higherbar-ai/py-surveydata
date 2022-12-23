@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>surveydata package &mdash; surveydata 0.1.12 documentation</title>
+  <title>surveydata package &mdash; surveydata 0.1.13 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -48,6 +48,8 @@
 <li class="toctree-l4"><a class="reference internal" href="surveydata.dynamodbstorage.html">surveydata.dynamodbstorage module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="surveydata.filestorage.html">surveydata.filestorage module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="surveydata.googlecloudstorage.html">surveydata.googlecloudstorage module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="surveydata.odkexportstorage.html">surveydata.odkexportstorage module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="surveydata.odkplatform.html">surveydata.odkplatform module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="surveydata.s3storage.html">surveydata.s3storage module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="surveydata.storagesystem.html">surveydata.storagesystem module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="surveydata.surveyctoexportstorage.html">surveydata.surveyctoexportstorage module</a></li>
@@ -181,6 +183,38 @@
 <li class="toctree-l3"><a class="reference internal" href="surveydata.googlecloudstorage.html#surveydata.googlecloudstorage.GoogleCloudStorage.submission_id"><code class="docutils literal notranslate"><span class="pre">GoogleCloudStorage.submission_id()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.googlecloudstorage.html#surveydata.googlecloudstorage.GoogleCloudStorage.submission_id_and_attachment_name"><code class="docutils literal notranslate"><span class="pre">GoogleCloudStorage.submission_id_and_attachment_name()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="surveydata.googlecloudstorage.html#surveydata.googlecloudstorage.GoogleCloudStorage.submission_object_name"><code class="docutils literal notranslate"><span class="pre">GoogleCloudStorage.submission_object_name()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="surveydata.odkexportstorage.html">surveydata.odkexportstorage module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="surveydata.odkexportstorage.html#surveydata.odkexportstorage.ODKExportStorage"><code class="docutils literal notranslate"><span class="pre">ODKExportStorage</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.odkexportstorage.html#surveydata.odkexportstorage.ODKExportStorage.__init__"><code class="docutils literal notranslate"><span class="pre">ODKExportStorage.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.odkexportstorage.html#surveydata.odkexportstorage.ODKExportStorage.attachments_supported"><code class="docutils literal notranslate"><span class="pre">ODKExportStorage.attachments_supported()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.odkexportstorage.html#surveydata.odkexportstorage.ODKExportStorage.get_attachment"><code class="docutils literal notranslate"><span class="pre">ODKExportStorage.get_attachment()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.odkexportstorage.html#surveydata.odkexportstorage.ODKExportStorage.get_data_timezone"><code class="docutils literal notranslate"><span class="pre">ODKExportStorage.get_data_timezone()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.odkexportstorage.html#surveydata.odkexportstorage.ODKExportStorage.get_metadata"><code class="docutils literal notranslate"><span class="pre">ODKExportStorage.get_metadata()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.odkexportstorage.html#surveydata.odkexportstorage.ODKExportStorage.get_metadata_binary"><code class="docutils literal notranslate"><span class="pre">ODKExportStorage.get_metadata_binary()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.odkexportstorage.html#surveydata.odkexportstorage.ODKExportStorage.get_submission"><code class="docutils literal notranslate"><span class="pre">ODKExportStorage.get_submission()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.odkexportstorage.html#surveydata.odkexportstorage.ODKExportStorage.get_submissions"><code class="docutils literal notranslate"><span class="pre">ODKExportStorage.get_submissions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.odkexportstorage.html#surveydata.odkexportstorage.ODKExportStorage.list_attachments"><code class="docutils literal notranslate"><span class="pre">ODKExportStorage.list_attachments()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.odkexportstorage.html#surveydata.odkexportstorage.ODKExportStorage.list_submissions"><code class="docutils literal notranslate"><span class="pre">ODKExportStorage.list_submissions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.odkexportstorage.html#surveydata.odkexportstorage.ODKExportStorage.query_attachment"><code class="docutils literal notranslate"><span class="pre">ODKExportStorage.query_attachment()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.odkexportstorage.html#surveydata.odkexportstorage.ODKExportStorage.query_submission"><code class="docutils literal notranslate"><span class="pre">ODKExportStorage.query_submission()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.odkexportstorage.html#surveydata.odkexportstorage.ODKExportStorage.set_data_timezone"><code class="docutils literal notranslate"><span class="pre">ODKExportStorage.set_data_timezone()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.odkexportstorage.html#surveydata.odkexportstorage.ODKExportStorage.store_attachment"><code class="docutils literal notranslate"><span class="pre">ODKExportStorage.store_attachment()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.odkexportstorage.html#surveydata.odkexportstorage.ODKExportStorage.store_metadata"><code class="docutils literal notranslate"><span class="pre">ODKExportStorage.store_metadata()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.odkexportstorage.html#surveydata.odkexportstorage.ODKExportStorage.store_metadata_binary"><code class="docutils literal notranslate"><span class="pre">ODKExportStorage.store_metadata_binary()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.odkexportstorage.html#surveydata.odkexportstorage.ODKExportStorage.store_submission"><code class="docutils literal notranslate"><span class="pre">ODKExportStorage.store_submission()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="surveydata.odkplatform.html">surveydata.odkplatform module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="surveydata.odkplatform.html#surveydata.odkplatform.ODKPlatform"><code class="docutils literal notranslate"><span class="pre">ODKPlatform</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.odkplatform.html#surveydata.odkplatform.ODKPlatform.__init__"><code class="docutils literal notranslate"><span class="pre">ODKPlatform.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.odkplatform.html#surveydata.odkplatform.ODKPlatform.get_submissions_df"><code class="docutils literal notranslate"><span class="pre">ODKPlatform.get_submissions_df()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="surveydata.odkplatform.html#surveydata.odkplatform.ODKPlatform.sync_data"><code class="docutils literal notranslate"><span class="pre">ODKPlatform.sync_data()</span></code></a></li>
 </ul>
 </li>
 </ul>
