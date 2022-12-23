@@ -210,7 +210,7 @@ class SurveyCTOExportStorage(StorageSystem):
 
         # parse and/or construct appropriate attachment path
         attpath = self._attachment_path_from_params(attachment_location=attachment_location,
-                                                    submission_id=submission_id, attachment_name=attachment_name)
+                                                    attachment_name=attachment_name)
 
         # return whether attachment is present
         return os.path.isfile(attpath)
@@ -249,20 +249,17 @@ class SurveyCTOExportStorage(StorageSystem):
 
         # parse and/or construct appropriate attachment path
         attpath = self._attachment_path_from_params(attachment_location=attachment_location,
-                                                    submission_id=submission_id, attachment_name=attachment_name)
+                                                    attachment_name=attachment_name)
 
         # open file and return
         return open(attpath, mode="rb")
 
-    def _attachment_path_from_params(self, attachment_location: str = "", submission_id: str = "",
-                                     attachment_name: str = "") -> str:
+    def _attachment_path_from_params(self, attachment_location: str = "", attachment_name: str = "") -> str:
         """
         Get attachment path from parameters, throwing exceptions as appropriate.
 
         :param attachment_location: Attachment location string (as exported by SurveyCTO Desktop)
         :type attachment_location: str
-        :param submission_id: Unique submission ID (in lieu of attachment_location)
-        :type submission_id: str
         :param attachment_name: Attachment filename (in lieu of attachment_location)
         :type attachment_name: str
         :return: Attachment object name
@@ -272,11 +269,11 @@ class SurveyCTOExportStorage(StorageSystem):
         """
 
         if not attachment_location:
-            # confirm we have a submission ID and attachment name, since we don't have an attachment location
-            if not submission_id or not attachment_name:
-                raise ValueError(f"Must pass either attachment_location or both submission_id and attachment_name.")
+            # confirm we have an attachment name, since we don't have an attachment location
+            if not attachment_name:
+                raise ValueError(f"Must pass either attachment_location or attachment_name.")
 
-            # construct attachment path from export file path and attachment location
+            # construct attachment path from export file path and attachment name
             return os.path.join(os.path.join(os.path.split(self.export_file)[0],
                                              SurveyCTOExportStorage.ATTACHMENTS_SUBDIR), attachment_name)
         else:
