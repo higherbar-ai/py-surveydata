@@ -22,7 +22,7 @@ appropriate ``SurveyPlatform`` object:
   including methods to process `text audits <https://docs.surveycto.com/02-designing-forms/01-core-concepts/03zd.field-types-text-audit.html>`_ and submit submission updates via the `review and correction workflow <https://docs.surveycto.com/04-monitoring-and-management/01-the-basics/04.reviewing-and-correcting.html>`_
   (in support of SurveyCTO's `machine learning roadmap <https://www.surveycto.com/blog/machine-learning-for-quality-control/>`_,
   with `the ml4qc project <https://github.com/orangechairlabs/ml4qc>`_)
-* ``ODKPlatform`` provides support for `Open Data Kit <https://getodk.org/>`_ data (`ODK Central <https://docs.getodk.org/central-intro/>`_ data, to be specific)
+* ``ODKPlatform`` provides support for `Open Data Kit <https://getodk.org/>`_ data via an `ODK Central <https://docs.getodk.org/central-intro/>`_ server
 
 All survey data must be stored somewhere, and storage is handled via an appropriate
 ``StorageSystem`` object:
@@ -41,7 +41,7 @@ In general, the workflow goes like this:
 #. Initialize one or more storage systems
 #. Synchronize data between the survey platform and the storage system(s) to ensure that
    data in storage is fully up-to-date (except for static export storage, via ``SurveyCTOExportStorage`` or ``ODKExportStorage``,
-   which doesn't support synchronization)
+   which doesn't require synchronization)
 #. Load data and/or attachments via the survey platform and storage API's
 #. Optionally: Save processed data and then, later, load it back again, for cases where ingestion and processing tasks
    are separated from actual analysis or use

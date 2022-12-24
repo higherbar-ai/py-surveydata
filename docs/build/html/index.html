@@ -87,7 +87,7 @@ appropriate <code class="docutils literal notranslate"><span class="pre">SurveyP
 including methods to process <a class="reference external" href="https://docs.surveycto.com/02-designing-forms/01-core-concepts/03zd.field-types-text-audit.html">text audits</a> and submit submission updates via the <a class="reference external" href="https://docs.surveycto.com/04-monitoring-and-management/01-the-basics/04.reviewing-and-correcting.html">review and correction workflow</a>
 (in support of SurveyCTO’s <a class="reference external" href="https://www.surveycto.com/blog/machine-learning-for-quality-control/">machine learning roadmap</a>,
 with <a class="reference external" href="https://github.com/orangechairlabs/ml4qc">the ml4qc project</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ODKPlatform</span></code> provides support for <a class="reference external" href="https://getodk.org/">Open Data Kit</a> data (<a class="reference external" href="https://docs.getodk.org/central-intro/">ODK Central</a> data, to be specific)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ODKPlatform</span></code> provides support for <a class="reference external" href="https://getodk.org/">Open Data Kit</a> data via an <a class="reference external" href="https://docs.getodk.org/central-intro/">ODK Central</a> server</p></li>
 </ul>
 <p>All survey data must be stored somewhere, and storage is handled via an appropriate
 <code class="docutils literal notranslate"><span class="pre">StorageSystem</span></code> object:</p>
@@ -106,7 +106,7 @@ with <a class="reference external" href="https://github.com/orangechairlabs/ml4q
 <li><p>Initialize one or more storage systems</p></li>
 <li><p>Synchronize data between the survey platform and the storage system(s) to ensure that
 data in storage is fully up-to-date (except for static export storage, via <code class="docutils literal notranslate"><span class="pre">SurveyCTOExportStorage</span></code> or <code class="docutils literal notranslate"><span class="pre">ODKExportStorage</span></code>,
-which doesn’t support synchronization)</p></li>
+which doesn’t require synchronization)</p></li>
 <li><p>Load data and/or attachments via the survey platform and storage API’s</p></li>
 <li><p>Optionally: Save processed data and then, later, load it back again, for cases where ingestion and processing tasks
 are separated from actual analysis or use</p></li>

@@ -35,9 +35,11 @@ class ODKExportStorage(StorageSystem):
         """
         Initialize ODK Central export data.
 
-        :param export_file: Path to the export file
+        :param export_file: Path to the export file (typically unzipped from an "All data and Attachments" export
+            from ODK Central
         :type export_file: str
-        :param attachments_available: True if attachments available (in media subfolder)
+        :param attachments_available: True if attachments available (must be in media subfolder, relative to
+            export_file location)
         :type attachments_available: bool
         :param data_timezone: Timezone for timestamps in the data (defaults to current timezone if not specified)
         :type data_timezone: datetime.timezone
@@ -77,7 +79,7 @@ class ODKExportStorage(StorageSystem):
                 # (c) aren't otherwise empty
                 if repeat_group and "KEY" in repeat_group[0] and "PARENT_KEY" in repeat_group[0] \
                         and len(repeat_group[0]) > 2:
-                    # reshape data for merging
+                    # reshape data for merging, in dict of dicts
                     reshaped_repeat_group = {}
                     for row in repeat_group:
                         # calculate column prefix from KEY, then drop it
@@ -164,7 +166,7 @@ class ODKExportStorage(StorageSystem):
         :rtype: list
         """
 
-        # spin through all submissions, to assemble our list of submissions
+        # spin through all submissions to assemble our list of submissions
         submission_keys = []
         for submission in self.submissions:
             submission_keys += [submission[self.ID_FIELD]]
@@ -253,16 +255,19 @@ class ODKExportStorage(StorageSystem):
 
         # assemble list of attachments, either for one submission or for all
         attachments = []
-        if submission_id:
-            # because all submission attachments are mixed up in the same media folder, can't list separately by
-            # submission
-            raise NotImplementedError
-        else:
-            for attachment in os.scandir(os.path.join(os.path.split(self.export_file)[0],
-                                                ODKExportStorage.ATTACHMENTS_SUBDIR)):
-                if attachment.is_file():
-                    attachments += [{"name": unquote_plus(attachment.name),
-                                     "location_string": unquote_plus(attachment.name)}]
+        if self.attachments_available:
+            if submission_id:
+                # because all submission attachments are mixed up in the same media folder, can't list separately by
+                # submission
+                raise NotImplementedError
+            else:
+                for attachment in os.scandir(os.path.join(os.path.split(self.export_file)[0],
+                                                    ODKExportStorage.ATTACHMENTS_SUBDIR)):
+                    if attachment.is_file():
+                        # since ODK Central attachment locations are exported as just the filename (without "media/"),
+                        # attachment location strings are just the same as the attachment names
+                        attachments += [{"name": unquote_plus(attachment.name),
+                                         "location_string": unquote_plus(attachment.name)}]
 
         # return all attachments found
         return attachments

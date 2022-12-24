@@ -40,24 +40,25 @@ class ODKPlatform(SurveyPlatform):
         :type config_file: str
         :param project_id: ODK project ID (if not supplied, will use default_project_id in config file)
         :type project_id: int
-        :param form_id: ODK form ID
+        :param form_id: ODK form ID (needed to call sync_data())
         :type form_id: str
 
         If you're not going to call sync_data(), you don't need to supply any of the parameters to this constructor.
         """
 
-        self.form_id = form_id
         if config_file:
             # go ahead and initialize the ODK Central client
             self.client = Client(config_path=config_file, project_id=project_id)
             self.client.open()
 
-            # initialize project ID
+            # initialize project ID and form ID
             self.project_id = self.client.project_id
+            self.form_id = form_id
         else:
             # allow for initialization without sync_data() support
             self.client = None
             self.project_id = None
+            self.form_id = None
 
         # call base class constructor as well
         super().__init__()
@@ -95,6 +96,8 @@ class ODKPlatform(SurveyPlatform):
 
         # set our filter for pulling data
         if cursor:
+            # use >= query to protect against the possibility that two submissions come in with the same timestamp,
+            # but we only get one of them (however unlikely; never want to miss data!)
             submission_filter = f"(__system/updatedAt ge {cursor} or __system/submissionDate ge {cursor})"
         else:
             submission_filter = ""
@@ -103,34 +106,35 @@ class ODKPlatform(SurveyPlatform):
                 submission_filter += " and "
             submission_filter += "__system/reviewState ne 'rejected'"
 
-        # pull data via ODK API, including expansion for repeat-group data
+        # pull all form data via ODK API, including repeat-group data (the expand="*")
         response_data = self.client.submissions.get_table(form_id=self.form_id, expand="*", filter=submission_filter)
 
         new_submission_list = []
         if response_data:
-            # extract data as flattened DataFrame
-            df = pd.DataFrame([flatten(x, '/') for x in response_data['value']])
+            # extract data as fully flattened DataFrame
+            df = pd.DataFrame([flatten(val, '/') for val in response_data['value']])
 
-            # rename __id column to KEY for basic consistency with ODK Central export format
+            # rename __id column to KEY for consistency with ODK Central export format
             df.rename(columns={self.ID_FIELD_API: self.ID_FIELD}, inplace=True)
 
             # scan for repeat groups, to tidy things up a little
             repeat_group_cols = [col for col in df if col.endswith(self.REPEAT_GROUP_COLUMN_SUFFIX)]
             if repeat_group_cols:
-                # drop the OData navigation columns
-                df.drop(columns=repeat_group_cols, inplace=True)
+                # drop each repeat group's individual ID column
                 for repeat_group_col in repeat_group_cols:
                     repeat_group = repeat_group_col[:-len(self.REPEAT_GROUP_COLUMN_SUFFIX)]
                     id_cols = [col for col in df if col.startswith(f"{repeat_group}/") and col.endswith("/__id")]
                     if id_cols:
-                        # drop the individual repeat-group row ID columns
                         df.drop(columns=id_cols, inplace=True)
+                # then drop the OData navigation columns themselves
+                df.drop(columns=repeat_group_cols, inplace=True)
 
-            # start out presuming that the last submission is the one last touched
-            newcursor = df["__system/updatedAt"].iloc[-1]
-            if not newcursor:
-                newcursor = df["__system/submissionDate"].iloc[-1]
-            newcursor_dt = parser.parse(newcursor)
+            # start out assuming that the last submission is the one last touched (but we won't rely on this)
+            # (but do rely on assumption that updatedAt, if present, is >= submissionDate)
+            new_cursor = df["__system/updatedAt"].iloc[-1]
+            if not new_cursor:
+                new_cursor = df["__system/submissionDate"].iloc[-1]
+            new_cursor_dt = parser.parse(new_cursor)
 
             # loop through to process each submission
             for index, submission in df.iterrows():
@@ -142,56 +146,60 @@ class ODKPlatform(SurveyPlatform):
                 last_touched_dt = parser.parse(last_touched)
 
                 # if the submission's last_touched is greater than our presumed new cursor, use it instead
-                if last_touched_dt > newcursor_dt:
-                    newcursor = last_touched
-                    newcursor_dt = last_touched_dt
+                if last_touched_dt > new_cursor_dt:
+                    new_cursor = last_touched
+                    new_cursor_dt = last_touched_dt
 
                 # generally, we want to write submissions to storage, even if we already have them — but, for
                 # efficiency reasons, we don't want to keep re-storing the most recent submission when it matches
                 # the cursor we used for the query (since the API query is inclusive of the date used in the cursor)
-                subid = submission[self.ID_FIELD]
-                if last_touched != cursor or not storage.query_submission(subid):
+                sub_id = submission[self.ID_FIELD]
+                if last_touched != cursor or not storage.query_submission(sub_id):
                     # if we have somewhere to save attachments — and it supports attachments — save them first, if any
                     if attachment_storage is not None and attachment_storage.attachments_supported() \
                             and submission["__system/attachmentsPresent"] > 0:
 
+                        # fetch attachment list
                         response = self.client.get(
-                            f"projects/{self.project_id}/forms/{self.form_id}/submissions/{subid}/attachments")
+                            f"projects/{self.project_id}/forms/{self.form_id}/submissions/{sub_id}/attachments")
 
+                        # fetch each available attachment in turn
                         for attachment in response.json():
                             if attachment["exists"]:
                                 attachment_name = attachment["name"]
                                 # stream the file from the server
-                                attresponse = self.client.get(f"projects/{self.project_id}/forms/{self.form_id}/"
-                                                              f"submissions/{subid}/attachments/{attachment_name}",
+                                att_response = self.client.get(f"projects/{self.project_id}/forms/{self.form_id}/"
+                                                              f"submissions/{sub_id}/attachments/{attachment_name}",
                                                               stream=True)
                                 # raise errors as exceptions
-                                attresponse.raise_for_status()
+                                att_response.raise_for_status()
                                 # stream straight to storage
-                                attresponse.raw.decode_content = True
-                                attachment_storage.store_attachment(subid, attachment_name=attachment_name,
-                                                                    attachment_data=attresponse.raw)
+                                att_response.raw.decode_content = True
+                                attachment_storage.store_attachment(sub_id, attachment_name=attachment_name,
+                                                                    attachment_data=att_response.raw)
 
                     # finally, save the submission itself and remember in list of new submissions
-                    storage.store_submission(subid, submission.to_dict())
-                    new_submission_list += [subid]
+                    storage.store_submission(sub_id, submission.to_dict())
+                    new_submission_list += [sub_id]
 
             # update our cursor, if it changed
-            if newcursor != cursor:
-                storage.store_metadata(self.CURSOR_METADATA_ID, newcursor)
+            if new_cursor != cursor:
+                storage.store_metadata(self.CURSOR_METADATA_ID, new_cursor)
 
-                # since the cursor changed, go ahead an set the appropriate (API) timezone as well
+                # since the cursor changed, go ahead and set the appropriate (API) timezone as well
                 storage.set_data_timezone(datetime.timezone.utc)
 
         return new_submission_list
 
     @staticmethod
-    def get_submissions_df(storage: StorageSystem) -> pd.DataFrame:
+    def get_submissions_df(storage: StorageSystem, sort_columns: bool = True) -> pd.DataFrame:
         """
         Get all submission data from storage, organized into a Pandas DataFrame and optimized based on the platform.
 
         :param storage: Storage system for submissions
         :type storage: StorageSystem
+        :param sort_columns: True to sort columns by name
+        :type sort_columns: bool
         :return: Pandas DataFrame containing all submissions currently in storage
         :rtype: pandas.DataFrame
         """
@@ -202,5 +210,9 @@ class ODKPlatform(SurveyPlatform):
         # set to index by KEY
         submissions_df.set_index([ODKPlatform.ID_FIELD], inplace=True)
         submissions_df = submissions_df.sort_index()
+
+        # maybe sort columns, because they get pretty messy (particularly with repeat-group data)
+        if sort_columns:
+            submissions_df = submissions_df.reindex(sorted(submissions_df.columns), axis=1)
 
         return submissions_df

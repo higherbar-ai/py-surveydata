@@ -105,8 +105,10 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>export_file</strong> (<em>str</em>) – Path to the export file</p></li>
-<li><p><strong>attachments_available</strong> (<em>bool</em>) – True if attachments available (in media subfolder)</p></li>
+<li><p><strong>export_file</strong> (<em>str</em>) – Path to the export file (typically unzipped from an “All data and Attachments” export
+from ODK Central</p></li>
+<li><p><strong>attachments_available</strong> (<em>bool</em>) – True if attachments available (must be in media subfolder, relative to
+export_file location)</p></li>
 <li><p><strong>data_timezone</strong> (<em>datetime.timezone</em>) – Timezone for timestamps in the data (defaults to current timezone if not specified)</p></li>
 </ul>
 </dd>
