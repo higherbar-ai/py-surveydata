@@ -35,7 +35,7 @@ class SurveyCTOPlatform(SurveyPlatform):
     QUALITY_VALUE = {"good": "ct_good", "okay": "ct_okay", "poor": "ct_poor", "fake": "ct_fake"}
     QUALITY_LABEL = {"good": "GOOD", "okay": "OKAY", "poor": "POOR", "fake": "FAKE"}
 
-    def __init__(self, server: str = "", username: str = "", password: str = "", formid: str = "",
+    def __init__(self, server: str = "", username: str = "", password: str = "", form_id: str = "",
                  private_key: str = ""):
         """
         Initialize SurveyCTO for access to survey data.
@@ -46,8 +46,8 @@ class SurveyCTOPlatform(SurveyPlatform):
         :type username: str
         :param password: Password for API access
         :type password: str
-        :param formid: SurveyCTO form ID
-        :type formid: str
+        :param form_id: SurveyCTO form ID
+        :type form_id: str
         :param private_key: Full text of private key, if using encryption
         :type private_key: str
 
@@ -55,7 +55,7 @@ class SurveyCTOPlatform(SurveyPlatform):
         """
 
         self.server = server
-        self.formid = formid
+        self.form_id = form_id
         self.private_key = private_key
         if username and password:
             self.creds = requests.auth.HTTPBasicAuth(username, password)
@@ -85,9 +85,9 @@ class SurveyCTOPlatform(SurveyPlatform):
         """
 
         # fire an exception if we haven't been initialized for syncing
-        if not self.server or not self.formid or self.creds is None:
+        if not self.server or not self.form_id or self.creds is None:
             raise ValueError("SurveyCTOPlatform not initialized with parameters sufficient for syncing data (server, "
-                             "formid, username, password).")
+                             "form_id, username, password).")
 
         # decide where attachments should go (if anywhere)
         if no_attachments:
@@ -99,7 +99,7 @@ class SurveyCTOPlatform(SurveyPlatform):
         cursor = storage.get_metadata(self.CURSOR_METADATA_ID)
 
         # pull data via server API
-        api_url = f"https://{self.server}.surveycto.com/api/v2/forms/data/wide/json/{self.formid}?date=" \
+        api_url = f"https://{self.server}.surveycto.com/api/v2/forms/data/wide/json/{self.form_id}?date=" \
                   + quote(cursor if cursor else "0")
         # (with non-default list of review statuses, if supplied)
         if review_statuses is not None and review_statuses:
@@ -138,7 +138,7 @@ class SurveyCTOPlatform(SurveyPlatform):
                     # if we have somewhere to save attachments — and it supports attachments — save them first,
                     # updating their location URLs
                     if attachment_storage is not None and attachment_storage.attachments_supported():
-                        attachment_prefix = f"https://{self.server}.surveycto.com/api/v2/forms/{self.formid}"\
+                        attachment_prefix = f"https://{self.server}.surveycto.com/api/v2/forms/{self.form_id}"\
                                             f"/submissions/{subid}/attachments/"
                         for field, value in submission.items():
                             value_str = str(value)
@@ -151,6 +151,8 @@ class SurveyCTOPlatform(SurveyPlatform):
                                                                 auth=self.creds, stream=True)
                                 else:
                                     attresponse = requests.get(value_str, auth=self.creds, stream=True)
+                                # raise errors as exceptions
+                                attresponse.raise_for_status()
                                 # stream straight to storage
                                 attresponse.raw.decode_content = True
                                 attlocation = attachment_storage.store_attachment(subid,
@@ -236,7 +238,7 @@ class SurveyCTOPlatform(SurveyPlatform):
         session, headers = self._authenticate_via_login()
 
         # post review bundle to the server
-        response = session.post(f"https://{self.server}.surveycto.com/forms/{self.formid}/save-reviews",
+        response = session.post(f"https://{self.server}.surveycto.com/forms/{self.form_id}/save-reviews",
                                 cookies=session.cookies, headers=headers, json=review_bundle)
         response.raise_for_status()
 
@@ -272,12 +274,14 @@ class SurveyCTOPlatform(SurveyPlatform):
         return session, headers
 
     @staticmethod
-    def get_submissions_df(storage: StorageSystem) -> pd.DataFrame:
+    def get_submissions_df(storage: StorageSystem, sort_columns: bool = False) -> pd.DataFrame:
         """
         Get all submission data from storage, organized into a Pandas DataFrame and optimized based on the platform.
 
         :param storage: Storage system for submissions
         :type storage: StorageSystem
+        :param sort_columns: True to sort columns by name
+        :type sort_columns: bool
         :return: Pandas DataFrame containing all submissions currently in storage
         :rtype: pandas.DataFrame
         """
@@ -288,6 +292,10 @@ class SurveyCTOPlatform(SurveyPlatform):
         # set to index by KEY
         submissions_df.set_index([SurveyCTOPlatform.ID_FIELD], inplace=True)
         submissions_df = submissions_df.sort_index()
+
+        # sort columns if requested
+        if sort_columns:
+            submissions_df = submissions_df.reindex(sorted(submissions_df.columns), axis=1)
 
         return submissions_df
 

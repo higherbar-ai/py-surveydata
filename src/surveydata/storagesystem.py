@@ -151,26 +151,26 @@ class StorageSystem(object):
             nvals = submissions_df.loc[submissions_df[col] != "", col].count()
 
             if nvals > 0:
-                # try converting to datetime
-                converted = pd.to_datetime(submissions_df[col], errors="coerce")
+                # try converting to numbers first
+                converted = pd.to_numeric(submissions_df[col], errors="coerce")
                 # if we didn't lose any data in the process, go with the converted version
                 if converted.count() == nvals:
-                    # resolve "ValueError: offset must be a timedelta strictly between -timedelta(hours=24) and
-                    # timedelta(hours=24)" issue with coerced-but-invalid timestamps by confirming first that
-                    # the converted dates can be converted to string format before committing to them
-                    try:
-                        str(converted)
-                    except ValueError:
-                        # if there's a ValueError, pass on this particular conversion
-                        pass
-                    else:
-                        submissions_df[col] = converted
+                    submissions_df[col] = converted
                 else:
-                    # try converting to numbers
-                    converted = pd.to_numeric(submissions_df[col], errors="coerce")
+                    # next try converting to datetime
+                    converted = pd.to_datetime(submissions_df[col], errors="coerce")
                     # if we didn't lose any data in the process, go with the converted version
                     if converted.count() == nvals:
-                        submissions_df[col] = converted
+                        # resolve "ValueError: offset must be a timedelta strictly between -timedelta(hours=24) and
+                        # timedelta(hours=24)" issue with coerced-but-invalid timestamps by confirming first that
+                        # the converted dates can be converted to string format before committing to them
+                        try:
+                            str(converted)
+                        except ValueError:
+                            # if there's a ValueError, pass on this particular conversion
+                            pass
+                        else:
+                            submissions_df[col] = converted
         # convert data types based on object types
         submissions_df = submissions_df.convert_dtypes()
 

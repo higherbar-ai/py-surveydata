@@ -22,8 +22,7 @@ appropriate ``SurveyPlatform`` object:
   including methods to process `text audits <https://docs.surveycto.com/02-designing-forms/01-core-concepts/03zd.field-types-text-audit.html>`_ and submit submission updates via the `review and correction workflow <https://docs.surveycto.com/04-monitoring-and-management/01-the-basics/04.reviewing-and-correcting.html>`_
   (in support of SurveyCTO's `machine learning roadmap <https://www.surveycto.com/blog/machine-learning-for-quality-control/>`_,
   with `the ml4qc project <https://github.com/orangechairlabs/ml4qc>`_)
-* *Support for more survey platforms is coming!* Reach out if you have a particular need or
-  are willing to contribute.
+* ``ODKPlatform`` provides support for `Open Data Kit <https://getodk.org/>`_ data via an `ODK Central <https://docs.getodk.org/central-intro/>`_ server
 
 All survey data must be stored somewhere, and storage is handled via an appropriate
 ``StorageSystem`` object:
@@ -33,15 +32,16 @@ All survey data must be stored somewhere, and storage is handled via an appropri
 * ``DynamoDBStorage`` provides support for `AWS DynamoDB <https://aws.amazon.com/dynamodb/>`_ storage
 * ``GoogleCloudStorage`` provides support for `Google Cloud Storage <https://cloud.google.com/storage>`_
 * ``AzureBlobStorage`` provides support for `Azure Blob Storage <https://azure.microsoft.com/en-us/products/storage/blobs/>`_
-* ``SurveyCTOExportStorage`` provides support for local exports from `SurveyCTO Desktop <https://docs.surveycto.com/05-exporting-and-publishing-data/02-exporting-data-with-surveycto-desktop/01.using-desktop.html>`_
+* ``SurveyCTOExportStorage`` provides support for local data exported with `SurveyCTO Desktop <https://docs.surveycto.com/05-exporting-and-publishing-data/02-exporting-data-with-surveycto-desktop/01.using-desktop.html>`_ (in wide format)
+* ``ODKExportStorage`` provides support for local data downloaded and unzipped from an `ODK Central <https://docs.getodk.org/central-intro/>`_ *All data and Attachments* export
 
 In general, the workflow goes like this:
 
 #. Initialize the survey platform
 #. Initialize one or more storage systems
 #. Synchronize data between the survey platform and the storage system(s) to ensure that
-   data in storage is fully up-to-date (except for static export storage, via a class like ``SurveyCTOExportStorage``,
-   which doesn't support synchronization)
+   data in storage is fully up-to-date (except for static export storage, via ``SurveyCTOExportStorage`` or ``ODKExportStorage``,
+   which doesn't require synchronization)
 #. Load data and/or attachments via the survey platform and storage API's
 #. Optionally: Save processed data and then, later, load it back again, for cases where ingestion and processing tasks
    are separated from actual analysis or use
@@ -49,8 +49,10 @@ In general, the workflow goes like this:
 Examples
 --------
 
-See `this example notebook <https://github.com/orangechairlabs/py-surveydata/blob/main/src/surveydata-surveycto-examples.ipynb>`_
-for a series of usage examples.
+See these notebooks for detailed usage examples:
+
+* `SurveyCTO usage examples <https://github.com/orangechairlabs/py-surveydata/blob/main/src/surveydata-surveycto-examples.ipynb>`_
+* `ODK usage examples <https://github.com/orangechairlabs/py-surveydata/blob/main/src/surveydata-odk-examples.ipynb>`_
 
 Documentation
 -------------

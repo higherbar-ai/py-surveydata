@@ -18,6 +18,7 @@ from surveydata import StorageSystem
 import boto3
 from boto3.dynamodb import conditions
 from typing import BinaryIO
+from decimal import Decimal
 
 
 class DynamoDBStorage(StorageSystem):
@@ -245,8 +246,39 @@ class DynamoDBStorage(StorageSystem):
         if self.partition_key_name:
             submission_data[self.partition_key_name] = self.partition_key_value
 
-        # store submission data directly in table
-        self.table.put_item(Item=submission_data)
+        # because of a ridiculous boto3 restriction, convert all floats to Decimals
+        item = DynamoDBStorage._replace_floats(submission_data)
+
+        # store submission data directly in table, replacing all floats with Decimal for ridiculous boto3 limitation
+        self.table.put_item(Item=item)
+
+    @staticmethod
+    def _replace_floats(obj):
+        """
+        Replace all floats within object with Decimals, with NaN and Infinity as "".
+
+        :param obj: Object within which to replace floats
+        :type obj: Any
+        :return: Passed object with float objects converted to Decimal
+        :rtype: Any
+        """
+        if isinstance(obj, list):
+            for i in range(len(obj)):
+                obj[i] = DynamoDBStorage._replace_floats(obj[i])
+            return obj
+        elif isinstance(obj, dict):
+            for k in obj:
+                obj[k] = DynamoDBStorage._replace_floats(obj[k])
+            return obj
+        elif isinstance(obj, float):
+            # convert via str() to avoid precision errors
+            decimal_val = Decimal(str(obj))
+            if str(decimal_val) in ['Infinity', 'NaN']:
+                return ""
+            else:
+                return decimal_val
+        else:
+            return obj
 
     def get_submission(self, submission_id: str) -> dict:
         """
