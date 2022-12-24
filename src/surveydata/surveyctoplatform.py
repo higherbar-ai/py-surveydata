@@ -274,12 +274,14 @@ class SurveyCTOPlatform(SurveyPlatform):
         return session, headers
 
     @staticmethod
-    def get_submissions_df(storage: StorageSystem) -> pd.DataFrame:
+    def get_submissions_df(storage: StorageSystem, sort_columns: bool = False) -> pd.DataFrame:
         """
         Get all submission data from storage, organized into a Pandas DataFrame and optimized based on the platform.
 
         :param storage: Storage system for submissions
         :type storage: StorageSystem
+        :param sort_columns: True to sort columns by name
+        :type sort_columns: bool
         :return: Pandas DataFrame containing all submissions currently in storage
         :rtype: pandas.DataFrame
         """
@@ -290,6 +292,10 @@ class SurveyCTOPlatform(SurveyPlatform):
         # set to index by KEY
         submissions_df.set_index([SurveyCTOPlatform.ID_FIELD], inplace=True)
         submissions_df = submissions_df.sort_index()
+
+        # sort columns if requested
+        if sort_columns:
+            submissions_df = submissions_df.reindex(sorted(submissions_df.columns), axis=1)
 
         return submissions_df
 
