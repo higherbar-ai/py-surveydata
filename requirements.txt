@@ -15,6 +15,6 @@ botocore~=1.27
 google-cloud-storage~=2.7
 azure-storage-blob~=12.14
 azure-identity~=1.12
-pyodk~=0.1
 python-dateutil~=2.8.2
 flatten_json~=0.1
+pyodk
