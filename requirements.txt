@@ -1,5 +1,5 @@
 # dev environment
-setuptools~=60.2
+setuptools>=65.5.1
 twine~=4.0
 sphinx~=5.3
 sphinx-rtd-theme~=1.1
